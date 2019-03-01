@@ -14,6 +14,7 @@
 #define ADD_USERNAME '1'
 #define ADD_EMAIL '2'
 #define LOGIN '4'
+#define CHAT '3'
 
 
 

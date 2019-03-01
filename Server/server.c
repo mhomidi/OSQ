@@ -45,7 +45,13 @@ void responseRequest(char buff[], int client_index) {
         send(clients[client_index].socket_id , "p2" , 3 , 0 );
     }
 
-    else if (buff[1] == CHAT)
+    else if (buff[1] == CHAT){
+        if (isUsernameExist(&buff[2]) != -1){
+
+        }
+        else
+            send(clients[client_index].socket_id , "p5" , 3 , 0 );
+    }
 
 }
 

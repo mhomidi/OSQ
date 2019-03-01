@@ -34,26 +34,11 @@ void request(char buff[], int sockfd) {
     else if (buff[1] == SUCCESSFULLY) {
         int n = 0;
         printConsole("You login successfully. ");
-        printConsole("Which work do you want to do? (Enter the Number)");
-        printConsole("1. chat to another.");
-        printConsole("2. Get more diamond.");
-//        buff[0] = REQUEST;
-//        buff[1] = '2';
-        while (TRUE) {
-            n = 0;
-            while ((buff[n++] = getchar()) != '\n');
-            buff[n - 1] = '\0';
-            if (buff[0] == '2') {
-                showAndProcessGetDiamond(buff, sockfd);
-                break;
-            }
-            else if (buff[0] == '1') {
-                showAndProcessChat(buff, sockfd);
-                break;
-            }
-            else
-                errorInput();
-        }
+        processWhatToDo(buff, sockfd);
+    }
+
+    else if (buff[1] == USER_NOT_FOUND) {
+        processWhatToDo(buff, sockfd);
     }
 
 }
@@ -159,7 +144,8 @@ void showAndProcessGetDiamond(char buff[], int sockfd) {
 }
 
 void showAndProcessChat(char buff[], int sockfd) {
-    printConsole("Enter username that you want to talk: ")
+    int n;
+    printConsole("Enter username that you want to talk: ");
     n = 2;
     while ((buff[n++] = getchar()) != '\n');
     buff[0] = REQUEST;
@@ -173,4 +159,26 @@ void errorInput() {
 
 void printConsole(char in[]) {
     puts(in);
+}
+
+void processWhatToDo(char buff[], int sockfd) {
+    int n = 0;
+    printConsole("Which work do you want to do? (Enter the Number)");
+    printConsole("1. chat to another.");
+    printConsole("2. Get more diamond.");
+    while (TRUE) {
+        n = 0;
+        while ((buff[n++] = getchar()) != '\n');
+        buff[n - 1] = '\0';
+        if (buff[0] == '2') {
+            showAndProcessGetDiamond(buff, sockfd);
+            break;
+        }
+        else if (buff[0] == '1') {
+            showAndProcessChat(buff, sockfd);
+            break;
+        }
+        else
+            errorInput();
+    }
 }

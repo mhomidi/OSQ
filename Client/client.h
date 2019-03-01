@@ -21,6 +21,7 @@
 #define SUCCESSFULLY '2'
 #define USERNAME_REENTER '3'
 #define LOGIN_REENTER '4'
+#define USER_NOT_FOUND '5'
 
 #define TRUE 1
 #define FALSE 0
@@ -35,3 +36,4 @@ void showAndProcessGetDiamond(char buff[], int sockfd);
 void showAndProcessChat(char buff[], int sockfd);
 void errorInput();
 void printConsole(char in[]);
+void processWhatToDo(char buff[], int sockfd);
