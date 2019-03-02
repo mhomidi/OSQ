@@ -107,16 +107,21 @@ void func(int sockfd)
         FD_SET(fileno(stdin), &readfds);
         FD_SET(sockfd, &readfds);
         FD_SET(sockfd, &wrfds);
-        activity = select( sockfd + 1 , &readfds , NULL , NULL , NULL);
-        puts("salam1");
-        if (FD_ISSET( sockfd , &readfds)) {
-            if ((valread = read(sockfd, buff, BUF_SIZE))) {
+        activity = select( sockfd + 1 , &readfds , &wrfds , &s_ex , NULL);
+//        puts("salma");
+        if (FD_ISSET( sockfd , &readfds) || FD_ISSET(fileno(stdin), &readfds)) {
+            valread = read(sockfd, buff, BUF_SIZE);
+            write(sockfd, buff, BUF_SIZE);
+            if (valread) {
+                puts("salam1");
                 if (isResponseOnSocked(buff)) {
+//                    char c;
+//                    puts("salam2");
+//                    c = getchar();
                     request(buff, sockfd);
                 }
             }
         }
-        puts("salam2");
     }
 }
 
@@ -189,29 +194,35 @@ void processWhatToDo(char buff[], int sockfd) {
     printConsole("Which work do you want to do? (Enter the Number)");
     printConsole("1. chat to another.");
     printConsole("2. Get more diamond.");
+    printConsole("3. Show my diamond.");
+    printConsole("4. Start competition.");
 //    while (TRUE) {
-    {
-        int len;
-//        n = 0;
-//        while ((buff[n++] = getchar()) != '\n');
-//        buff[n - 1] = '\0';
-        if (FD_ISSET( fileno(stdin) , &readfds)) {
-            if (len = read(fileno(stdin), buff, 100)) {
-                buff[len] = 0;
+//    {
+//        int len;
+        n = 0;
+        while ((buff[n++] = getchar()) != '\n');
+        buff[n - 1] = '\0';
+//        if (FD_ISSET( fileno(stdin) , &readfds)) {
+//            puts("kaka1");
+//            getchar();
+//            if (len = read(fileno(stdin), buff, 100)) {
+//                buff[len] = 0;
 //                printf("%s", buff);
-            }
+//            }
             if (buff[0] == '2') {
                 showAndProcessGetDiamond(buff, sockfd);
+//                puts("kaka3");
 //                break;
             }
             else if (buff[0] == '1') {
                 showAndProcessChat(buff, sockfd);
+//                puts("kaka4");
 //                break;
             }
             else
                 errorInput();
-        }
-    }
+//        }
+//    }
 }
 
 
