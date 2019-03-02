@@ -107,7 +107,8 @@ void func(int sockfd)
         FD_SET(fileno(stdin), &readfds);
         FD_SET(sockfd, &readfds);
         FD_SET(sockfd, &wrfds);
-        activity = select( sockfd + 1 , &readfds , &wrfds , &s_ex , NULL);
+        activity = select( sockfd + 1 , &readfds , NULL , NULL , NULL);
+        puts("salam1");
         if (FD_ISSET( sockfd , &readfds)) {
             if ((valread = read(sockfd, buff, BUF_SIZE))) {
                 if (isResponseOnSocked(buff)) {
@@ -115,6 +116,7 @@ void func(int sockfd)
                 }
             }
         }
+        puts("salam2");
     }
 }
 

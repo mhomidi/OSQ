@@ -8,7 +8,7 @@ int main(int argc , char *argv[])
     opt = TRUE;
     //a message
     struct timeval a;
-    char *message = "p1";
+    char *message = "";
     a.tv_sec = 0;
     a.tv_usec = 500;
     //initialise all client_socket[] to 0 so not checked
