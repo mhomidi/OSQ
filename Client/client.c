@@ -104,9 +104,9 @@ void func(int sockfd)
         FD_ZERO(&s_ex);
 
         //add master socket to set
+        FD_SET(fileno(stdin), &readfds);
         FD_SET(sockfd, &readfds);
         FD_SET(sockfd, &wrfds);
-        FD_SET(fileno(stdin), &readfds);
         activity = select( sockfd + 1 , &readfds , &wrfds , &s_ex , NULL);
         if (FD_ISSET( sockfd , &readfds)) {
             if ((valread = read(sockfd, buff, BUF_SIZE))) {
