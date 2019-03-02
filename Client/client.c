@@ -38,7 +38,7 @@ void request(char buff[], int sockfd) {
     }
 
     else if (buff[1] == USER_NOT_FOUND) {
-        printConsole("This user is not founded or online.")
+        printConsole("This user is not founded or online.");
         processWhatToDo(buff, sockfd);
     }
 
@@ -154,6 +154,7 @@ void showAndProcessChat(char buff[], int sockfd) {
     printConsole("Enter username that you want to talk: ");
     n = 2;
     while ((buff[n++] = getchar()) != '\n');
+    buff[n - 1] = '\0';
     buff[0] = REQUEST;
     buff[1] = CHAT;
     send(sockfd, buff, BUF_SIZE, 0);
