@@ -101,12 +101,13 @@ void func(int sockfd)
 //        read(sockfd, buff, sizeof(buff));
         FD_ZERO(&readfds);
         FD_ZERO(&wrfds);
+        FD_ZERO(&s_ex);
 
         //add master socket to set
         FD_SET(sockfd, &readfds);
         FD_SET(sockfd, &wrfds);
-
-        activity = select( sockfd + 1 , &readfds , &wrfds , NULL , NULL);
+        FD_SET(fileno(stdin), &readfds);
+        activity = select( sockfd + 1 , &readfds , &wrfds , &s_ex , NULL);
         if (FD_ISSET( sockfd , &readfds)) {
             if ((valread = read(sockfd, buff, BUF_SIZE))) {
                 if (isResponseOnSocked(buff)) {
@@ -186,20 +187,28 @@ void processWhatToDo(char buff[], int sockfd) {
     printConsole("Which work do you want to do? (Enter the Number)");
     printConsole("1. chat to another.");
     printConsole("2. Get more diamond.");
-    while (TRUE) {
-        n = 0;
-        while ((buff[n++] = getchar()) != '\n');
-        buff[n - 1] = '\0';
-        if (buff[0] == '2') {
-            showAndProcessGetDiamond(buff, sockfd);
-            break;
+//    while (TRUE) {
+    {
+        int len;
+//        n = 0;
+//        while ((buff[n++] = getchar()) != '\n');
+//        buff[n - 1] = '\0';
+        if (FD_ISSET( fileno(stdin) , &readfds)) {
+            if (len = read(fileno(stdin), buff, 100)) {
+                buff[len] = 0;
+//                printf("%s", buff);
+            }
+            if (buff[0] == '2') {
+                showAndProcessGetDiamond(buff, sockfd);
+//                break;
+            }
+            else if (buff[0] == '1') {
+                showAndProcessChat(buff, sockfd);
+//                break;
+            }
+            else
+                errorInput();
         }
-        else if (buff[0] == '1') {
-            showAndProcessChat(buff, sockfd);
-            break;
-        }
-        else
-            errorInput();
     }
 }
 

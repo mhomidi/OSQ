@@ -80,9 +80,6 @@ void input(char* inputStr)
 
 int isUsernameExist(char username[]) {
     for (int j = 0; j < max_clients; ++j) {
-        printf("%d. ", j);
-        puts(username);
-        puts(clients[j].name);
         if (strcmp(username, clients[j].name) == 0)
             return i;
     }

@@ -10,7 +10,7 @@
 
 //set of socket descriptors
 fd_set readfds;
-fd_set wrfds;
+fd_set wrfds, s_ex;
 
 //client
 #define SIGNUP '1'
