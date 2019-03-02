@@ -8,6 +8,10 @@
 #define SA struct sockaddr
 
 
+//set of socket descriptors
+fd_set readfds;
+fd_set wrfds;
+
 //client
 #define SIGNUP '1'
 #define LOGIN '4'
@@ -38,3 +42,4 @@ void showAndProcessChat(char buff[], int sockfd);
 void errorInput();
 void printConsole(char in[]);
 void processWhatToDo(char buff[], int sockfd);
+void processChating(char buff[], int sockfd);

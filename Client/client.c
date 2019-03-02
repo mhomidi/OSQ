@@ -44,7 +44,7 @@ void request(char buff[], int sockfd) {
 
     else if (buff[1] == USER_FOUND) {
         printConsole("User is founded. Please start your chat:");
-
+        processChating(buff, sockfd);
     }
 
 }
@@ -82,6 +82,7 @@ void func(int sockfd)
             errorInput();
     }
     for (;;) {
+        int activity, valread;
 //        int n;
 //        bzero(buff, sizeof(buff));
 //        printf("Enter the string : ");
@@ -97,9 +98,21 @@ void func(int sockfd)
 //            break;
 //        }
 //        getchar()
-        read(sockfd, buff, sizeof(buff));
-        if (isResponseOnSocked(buff)) {
-            request(buff, sockfd);
+//        read(sockfd, buff, sizeof(buff));
+        FD_ZERO(&readfds);
+        FD_ZERO(&wrfds);
+
+        //add master socket to set
+        FD_SET(sockfd, &readfds);
+        FD_SET(sockfd, &wrfds);
+
+        activity = select( sockfd + 1 , &readfds , &wrfds , NULL , NULL);
+        if (FD_ISSET( sockfd , &readfds)) {
+            if ((valread = read(sockfd, buff, BUF_SIZE))) {
+                if (isResponseOnSocked(buff)) {
+                    request(buff, sockfd);
+                }
+            }
         }
     }
 }
@@ -188,4 +201,11 @@ void processWhatToDo(char buff[], int sockfd) {
         else
             errorInput();
     }
+}
+
+
+void processChating(char buff[], int sockfd) {
+    int n = 0;
+    while ((buff[n++] = getchar()) != '\n');
+    buff[n - 1] = '\0';
 }
