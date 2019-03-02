@@ -22,6 +22,7 @@
 #define USERNAME_REENTER '3'
 #define LOGIN_REENTER '4'
 #define USER_NOT_FOUND '5'
+#define USER_FOUND '6'
 
 #define TRUE 1
 #define FALSE 0

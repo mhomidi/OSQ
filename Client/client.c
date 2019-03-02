@@ -38,7 +38,13 @@ void request(char buff[], int sockfd) {
     }
 
     else if (buff[1] == USER_NOT_FOUND) {
+        printConsole("This user is not founded or online.")
         processWhatToDo(buff, sockfd);
+    }
+
+    else if (buff[1] == USER_FOUND) {
+        printConsole("User is founded. Please start your chat:");
+
     }
 
 }

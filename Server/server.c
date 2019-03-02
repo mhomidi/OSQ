@@ -46,7 +46,9 @@ void responseRequest(char buff[], int client_index) {
     }
 
     else if (buff[1] == CHAT){
-        if (isUsernameExist(&buff[2]) != -1){
+        if (int index = isUsernameExist(&buff[2]) != -1 && clients[index].socket_id != 0){
+            send(clients[index].socket_id , "p6" , 3 , 0 );
+            send(clients[client_index].socket_id , "p6" , 3 , 0 );
 
         }
         else
