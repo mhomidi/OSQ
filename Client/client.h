@@ -33,6 +33,8 @@ fd_set wrfds, s_ex;
 #define _SIGNUP '8'
 #define _LOGIN '9'
 #define GET_TIME 'a'
+#define GET_DIAMOND 'b'
+#define EMAIL 'c'
 
 #define TRUE 1
 #define FALSE 0
@@ -40,10 +42,14 @@ fd_set wrfds, s_ex;
 #define BUF_SIZE 1000
 
 
+
+char globalBuffer[BUF_SIZE];
+
+
 void func(int sockfd);
 void printString(char buff[]);
 void input(char* inputStr);
-void showAndProcessGetDiamond(char buff[], int sockfd);
+void showGetDiamond(char input[], int sockfd);
 void showAndProcessChat(char buff[], int sockfd);
 void errorInput();
 void printConsole(char in[]);
@@ -56,3 +62,5 @@ void processStartInput(char input[], char buff[]);
 void createRequestBuffer(char* buff, char req);
 void printWhatToDo();
 void getTimeOfGame(int sockfd);
+void processSendEmail(char input[], int sockfd);
+void processGetDiamond(char input[], int sockfd);

@@ -11,7 +11,9 @@ int main(int argc , char *argv[])
 //set of socket descriptors
     fd_set readfds;
     fd_set wrfds;
-
+    for (int i = 0; i < BUF_SIZE; ++i) {
+        globalBuffer[i] = 0;
+    }
     // socket create and varification
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
     if (sockfd == -1) {

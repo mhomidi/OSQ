@@ -23,7 +23,7 @@ void showRespose(char buff[], int sockfd) {
     }
     else if (buff[1] == SUCCESSFULLY) {
         int n = 0;
-        printConsole("You login successfully. ");
+        printConsole("successfully. ");
         printWhatToDo();
     }
 
@@ -36,7 +36,7 @@ void showRespose(char buff[], int sockfd) {
         printConsole("User is founded. Please start your chat:");
     }
     else if (buff[1] == GET_TIME) {
-        printConsole(buff);
+        printConsole(&buff[2]);
         printWhatToDo();
     }
 }
@@ -66,13 +66,18 @@ void request(char buff[], char input[] , int sockfd) {
     else if (buff[1] == _SIGNUP) {
         processSignup(input, sockfd);
     }
+    else if (buff[1] == EMAIL) {
+        processSendEmail(input, sockfd);
+    }
+    else if (buff[1] == GET_DIAMOND) {
+        processGetDiamond(input, sockfd);
+    }
 }
 
 
 void func(int sockfd)
 {
     int n = 0;
-    char buff[BUF_SIZE] = {0};
     char input[BUF_SIZE] = {0};
 //    printConsole("Select one of these:");
 //    printConsole("1.Signup");
@@ -130,12 +135,11 @@ void func(int sockfd)
         activity = select( sockfd + 1 , &readfds , NULL , NULL , NULL);
 //        puts("salma");
         if (FD_ISSET( sockfd , &readfds)) {
-            valread = read(sockfd, buff, BUF_SIZE);
+            valread = read(sockfd, globalBuffer, BUF_SIZE);
             if (valread) {
 //                puts(buff);
-                if (isResponseOnSocked(buff)) {
-                    puts(buff);
-                    showRespose(buff, sockfd);
+                if (isResponseOnSocked(globalBuffer)) {
+                    showRespose(globalBuffer, sockfd);
                 }
             }
         }
@@ -143,7 +147,8 @@ void func(int sockfd)
         {
             if ((valread = read(0 , input, BUF_SIZE)) != 0)
             {
-                request(buff, input, sockfd);
+                request(globalBuffer, input, sockfd);
+//                printConsole(globalBuffer);
             }
         }
     }
@@ -173,25 +178,26 @@ void input(char* inputStr)
 
 }
 
-void showAndProcessGetDiamond(char buff[], int sockfd) {
+void showGetDiamond(char input[], int sockfd) {
     int n = 0;
     printConsole("Enter a number of way:");
     printConsole("1.Enter my email (1 diamond)");
-    while (TRUE) {
-        n = 0;
-        while ((buff[n++] = getchar()) != '\n');
-        if (buff[0] == '1' && buff[1] == '\n') {
-            n = 2;
-            printConsole("Please enter your email:");
-            while ((buff[n++] = getchar()) != '\n');
-            buff[0] = REQUEST;
-            buff[1] = ADD_EMAIL;
-            send(sockfd, buff, BUF_SIZE, 0);
-            break;
-        }
-        else
-            errorInput();
-    }
+    globalBuffer[1] = GET_DIAMOND;
+//    while (TRUE) {
+//        n = 0;
+//        while ((buff[n++] = getchar()) != '\n');
+//        if (buff[0] == '1' && buff[1] == '\n') {
+//            n = 2;
+//            printConsole("Please enter your email:");
+//            while ((buff[n++] = getchar()) != '\n');
+//            buff[0] = REQUEST;
+//            buff[1] = ADD_EMAIL;
+//            send(sockfd, buff, BUF_SIZE, 0);
+//            break;
+//        }
+//        else
+//            errorInput();
+//    }
 }
 
 void showAndProcessChat(char buff[], int sockfd) {
@@ -216,31 +222,14 @@ void printConsole(char in[]) {
 void processWhatToDo(char buff[], int sockfd) {
     int n = 0;
 
-//    while (TRUE) {
-//    {
-//        int len;
-//        n = 0;
-//        while ((buff[n++] = getchar()) != '\n');
-//        buff[n - 1] = '\0';
-//        if (FD_ISSET( fileno(stdin) , &readfds)) {
-//            puts("kaka1");
-//            getchar();
-//            if (len = read(fileno(stdin), buff, 100)) {
-//                buff[len] = 0;
-//                printf("%s", buff);
-//            }
             if (buff[0] == '2') {
-                showAndProcessGetDiamond(buff, sockfd);
-//                puts("kaka3");
-//                break;
+                showGetDiamond(buff, sockfd);
             }
             else if (buff[0] == '1') {
                 showAndProcessChat(buff, sockfd);
-//                puts("kaka4");
-//                break;
             }
             else if (buff[0] == '3') {
-                getTimeOfGame(buff, sockfd);
+                getTimeOfGame(sockfd);
             }
             else
                 errorInput();
@@ -284,7 +273,7 @@ void createRequestBuffer(char* buff, char req) {
         buff[i] = buff[i - 2];
     }
     buff[0] = REQUEST;
-    buff[1] = SIGNUP;
+    buff[1] = req;
 }
 
 void processStartInput(char input[], char buff[]) {
@@ -305,4 +294,16 @@ void getTimeOfGame(int sockfd) {
     buff[0] = REQUEST;
     buff[1] = TIME_GAME;
     send(sockfd, buff, 10, 0);
+}
+
+void processSendEmail(char input[], int sockfd) {
+    createRequestBuffer(input, ADD_EMAIL);
+    send(sockfd, input, BUF_SIZE, 0);
+}
+
+void processGetDiamond(char input[], int sockfd) {
+    if (input[0] == '1'){
+        printConsole("Please enter your email:");
+        globalBuffer[1] = 'c';
+    }
 }

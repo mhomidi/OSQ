@@ -151,7 +151,6 @@ int main(int argc , char *argv[])
             if ((valread = read(0 , buffer, 1024)) != 0)
             {
                 buffer[valread - 1] = 0;
-                printString(buffer);
                 for (int i = 0; i < max_clients; i++) {
                     if (clients[i].socket_id != -1) {
                         send(clients[i].socket_id, buffer, strlen(buffer), 0);
