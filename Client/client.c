@@ -10,43 +10,56 @@ int isResponseOnSocked(char buffer[]) {
 }
 
 
-
-void request(char buff[], int sockfd) {
+void showRespose(char buff[], int sockfd) {
     if (buff[1] == USERNAME_REENTER){
-        int n = 2;
         printConsole("This username already exist. enter your username to signup again: ");
-        buff[0] = REQUEST;
-        buff[1] = SIGNUP;
-        while ((buff[n++] = getchar()) != '\n');
-        buff[n - 1] = '\0';
-        send(sockfd, buff, BUF_SIZE, 0);
+    }
+    else if (buff[1] == START){
+        printWorks();
     }
 
     else if (buff[1] == LOGIN_REENTER) {
-        int n = 2;
         printConsole("This username already doesn\'t exist. enter your username to login again: ");
-        buff[0] = REQUEST;
-        buff[1] = LOGIN;
-        while ((buff[n++] = getchar()) != '\n');
-        buff[n - 1] = '\0';
-        send(sockfd, buff, BUF_SIZE, 0);
     }
     else if (buff[1] == SUCCESSFULLY) {
         int n = 0;
         printConsole("You login successfully. ");
-        processWhatToDo(buff, sockfd);
+        printWorks();
     }
 
     else if (buff[1] == USER_NOT_FOUND) {
         printConsole("This user is not founded or online.");
-        processWhatToDo(buff, sockfd);
     }
 
     else if (buff[1] == USER_FOUND) {
         printConsole("User is founded. Please start your chat:");
-        processChating(buff, sockfd);
+    }
+}
+
+
+void request(char buff[], int sockfd) {
+    if (buff[1] == USERNAME_REENTER){
+        processSignup(buff, sockfd);
+    }
+    else if (buff[1] == START){
+        printWorks();
     }
 
+    else if (buff[1] == LOGIN_REENTER) {
+        processLogin(buff, sockfd);
+    }
+    else if (buff[1] == SUCCESSFULLY) {
+        int n = 0;
+        processWhatToDo(buff, sockfd);
+    }
+
+    else if (buff[1] == USER_NOT_FOUND) {
+        processWhatToDo(buff, sockfd);
+    }
+
+    else if (buff[1] == USER_FOUND) {
+        processChating(buff, sockfd);
+    }
 }
 
 
@@ -54,33 +67,34 @@ void func(int sockfd)
 {
     int n = 0;
     char buff[BUF_SIZE] = {0};
-    printConsole("Select one of these:");
-    printConsole("1.Signup");
-    printConsole("2.Login");
-    while(TRUE) {
-        n = 0;
-        while ((buff[n++] = getchar()) != '\n');
-        if (buff[0] == '1') {
-            int n = 2;
-            printConsole("Please enter your username to signup: ");
-            buff[0] = REQUEST;
-            buff[1] = SIGNUP;
-            while ((buff[n++] = getchar()) != '\n');
-            buff[n - 1] = '\0';
-            send(sockfd, buff, BUF_SIZE, 0);
-            break;
-        } else if (buff[0] == '2') {
-            int n = 2;
-            printConsole("Please enter your username to login: ");
-            buff[0] = REQUEST;
-            buff[1] = LOGIN;
-            while ((buff[n++] = getchar()) != '\n');
-            buff[n - 1] = '\0';
-            send(sockfd, buff, BUF_SIZE, 0);
-            break;
-        } else
-            errorInput();
-    }
+    char input[BUF_SIZE] = {0};
+//    printConsole("Select one of these:");
+//    printConsole("1.Signup");
+//    printConsole("2.Login");
+//    while(TRUE) {
+//        n = 0;
+//        while ((buff[n++] = getchar()) != '\n');
+//        if (buff[0] == '1') {
+//            int n = 2;
+//            printConsole("Please enter your username to signup: ");
+//            buff[0] = REQUEST;
+//            buff[1] = SIGNUP;
+//            while ((buff[n++] = getchar()) != '\n');
+//            buff[n - 1] = '\0';
+//            send(sockfd, buff, BUF_SIZE, 0);
+//            break;
+//        } else if (buff[0] == '2') {
+//            int n = 2;
+//            printConsole("Please enter your username to login: ");
+//            buff[0] = REQUEST;
+//            buff[1] = LOGIN;
+//            while ((buff[n++] = getchar()) != '\n');
+//            buff[n - 1] = '\0';
+//            send(sockfd, buff, BUF_SIZE, 0);
+//            break;
+//        } else
+//            errorInput();
+//    }
     for (;;) {
         int activity, valread;
 //        int n;
@@ -100,26 +114,30 @@ void func(int sockfd)
 //        getchar()
 //        read(sockfd, buff, sizeof(buff));
         FD_ZERO(&readfds);
-        FD_ZERO(&wrfds);
-        FD_ZERO(&s_ex);
+//        FD_ZERO(&wrfds);
+//        FD_ZERO(&s_ex);
 
         //add master socket to set
         FD_SET(fileno(stdin), &readfds);
         FD_SET(sockfd, &readfds);
-        FD_SET(sockfd, &wrfds);
-        activity = select( sockfd + 1 , &readfds , &wrfds , &s_ex , NULL);
+//        FD_SET(sockfd, &wrfds);
+        activity = select( sockfd + 1 , &readfds , NULL , NULL , NULL);
 //        puts("salma");
-        if (FD_ISSET( sockfd , &readfds) || FD_ISSET(fileno(stdin), &readfds)) {
+        if (FD_ISSET( sockfd , &readfds)) {
             valread = read(sockfd, buff, BUF_SIZE);
-            write(sockfd, buff, BUF_SIZE);
             if (valread) {
-                puts("salam1");
+//                puts(buff);
                 if (isResponseOnSocked(buff)) {
-//                    char c;
-//                    puts("salam2");
-//                    c = getchar();
-                    request(buff, sockfd);
+                    puts("asla");
+                    showRespose(buff, sockfd);
                 }
+            }
+        }
+        if (FD_ISSET(0, &readfds))
+        {
+            if ((valread = read(0 , input, BUF_SIZE)) != 0)
+            {
+                request(input, sockfd);
             }
         }
     }
@@ -191,17 +209,13 @@ void printConsole(char in[]) {
 
 void processWhatToDo(char buff[], int sockfd) {
     int n = 0;
-    printConsole("Which work do you want to do? (Enter the Number)");
-    printConsole("1. chat to another.");
-    printConsole("2. Get more diamond.");
-    printConsole("3. Show my diamond.");
-    printConsole("4. Start competition.");
+
 //    while (TRUE) {
 //    {
 //        int len;
-        n = 0;
-        while ((buff[n++] = getchar()) != '\n');
-        buff[n - 1] = '\0';
+//        n = 0;
+//        while ((buff[n++] = getchar()) != '\n');
+//        buff[n - 1] = '\0';
 //        if (FD_ISSET( fileno(stdin) , &readfds)) {
 //            puts("kaka1");
 //            getchar();
@@ -230,4 +244,37 @@ void processChating(char buff[], int sockfd) {
     int n = 0;
     while ((buff[n++] = getchar()) != '\n');
     buff[n - 1] = '\0';
+}
+
+void processSignup(char buff[], int sockfd){
+    int n = 2;
+    buff[0] = REQUEST;
+    buff[1] = SIGNUP;
+    while ((buff[n++] = getchar()) != '\n');
+    buff[n - 1] = '\0';
+    send(sockfd, buff, BUF_SIZE, 0);
+}
+
+void processLogin(char buff[], int sockfd){
+    int n = 2;
+    buff[0] = REQUEST;
+    buff[1] = SIGNUP;
+    while ((buff[n++] = getchar()) != '\n');
+    buff[n - 1] = '\0';
+    send(sockfd, buff, BUF_SIZE, 0);
+}
+
+void printWorks() {
+    printConsole("Select one of these:");
+    printConsole("1.Signup");
+    printConsole("2.Login");
+}
+
+void createRequestBuffer(char* buff, char req) {
+    buff[strlen(buff) - 1] = 0;
+    for (int i = strlen(buff); i > 1; --i) {
+        buff[i] = buff[i - 2];
+    }
+    buff[0] = REQUEST;
+    buff[1] = SIGNUP;
 }

@@ -31,7 +31,7 @@ void responseRequest(char buff[], int client_index) {
                 clients[index].diamond = clients[client_index].diamond;
                 clients[index].socket_id = clients[client_index].socket_id;
                 strncpy(clients[index].email, clients[client_index].email, sizeof(clients[client_index].email));
-                clients[client_index].socket_id = 0;
+                clients[client_index].socket_id = -1;
             }
         }
         else

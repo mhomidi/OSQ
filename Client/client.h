@@ -21,6 +21,7 @@ fd_set wrfds, s_ex;
 
 
 //server
+#define START '0'
 #define USERNAME '1'
 #define SUCCESSFULLY '2'
 #define USERNAME_REENTER '3'
@@ -43,3 +44,6 @@ void errorInput();
 void printConsole(char in[]);
 void processWhatToDo(char buff[], int sockfd);
 void processChating(char buff[], int sockfd);
+void processSignup(char buff[], int sockfd);
+void processLogin(char buff[], int sockfd);
+void printWorks();

@@ -37,12 +37,11 @@ int opt;
 int master_socket , addrlen , new_socket , max_clients , activity, i , valread , sd;
 int max_sd;
 struct sockaddr_in address;
-char buffer[1025]; //data buffer of 1K
+char buffer[BUF_SIZE]; //data buffer of 1K
 Client clients[10];
 
 //set of socket descriptors
 fd_set readfds;
-fd_set wrfds;
 
 int isRequestOnSocked(char buff[]);
 void responseRequest(char buff[], int socketReq);

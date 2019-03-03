@@ -8,13 +8,13 @@ int main(int argc , char *argv[])
     opt = TRUE;
     //a message
     struct timeval a;
-    char *message = "";
+    char *message = "p0";
     a.tv_sec = 0;
     a.tv_usec = 500;
     //initialise all client_socket[] to 0 so not checked
     for (i = 0; i < max_clients; i++)
     {
-        clients[i].socket_id = 0;
+        clients[i].socket_id = -1;
     }
 
     //create a master socket
@@ -64,6 +64,7 @@ int main(int argc , char *argv[])
         FD_ZERO(&readfds);
 //        FD_ZERO(&wrfds);
 
+        FD_SET(0, &readfds);
         //add master socket to set
         FD_SET(master_socket, &readfds);
 //        FD_SET(master_socket, &wrfds);
@@ -135,7 +136,7 @@ int main(int argc , char *argv[])
             for (int k = 0; k < max_clients; k++)
             {
                 //if position is empty
-                if( clients[k].socket_id == 0 )
+                if( clients[k].socket_id == -1 )
                 {
                     clients[k].socket_id = new_socket;
                     clients[k].port = ntohs(address.sin_port);
@@ -145,14 +146,26 @@ int main(int argc , char *argv[])
                 }
             }
         }
-
+        if (FD_ISSET(0, &readfds))
+        {
+            if ((valread = read(0 , buffer, 1024)) != 0)
+            {
+                buffer[valread - 1] = 0;
+                printString(buffer);
+                for (int i = 0; i < max_clients; i++) {
+                    if (clients[i].socket_id != -1) {
+                        send(clients[i].socket_id, buffer, strlen(buffer), 0);
+                    }
+                }
+            }
+        }
         //else its some IO operation on some other socket
         for (i = 0; i < max_clients; i++)
         {
             sd = clients[i].socket_id;
-
-            if (FD_ISSET( sd , &readfds))
+            if (sd != -1 && FD_ISSET( sd , &readfds))
             {
+                puts("4");
                 //Check if it was for closing , and also read the
                 //incoming message
                 if ((valread = read( sd , buffer, 1024)) == 0)
@@ -165,7 +178,7 @@ int main(int argc , char *argv[])
 
                     //Close the socket and mark as 0 in list for reuse
                     close( sd );
-                    clients[i].socket_id = 0;
+                    clients[i].socket_id = -1;
                 }
 
                     //Echo back the message that came in
