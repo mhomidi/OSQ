@@ -37,12 +37,12 @@ void showRespose(char buff[], int sockfd) {
 }
 
 
-void request(char buff[], int sockfd) {
+void request(char buff[], char input[] , int sockfd) {
     if (buff[1] == USERNAME_REENTER){
         processSignup(buff, sockfd);
     }
     else if (buff[1] == START){
-        printWorks();
+        processStartInput(input, buff);
     }
 
     else if (buff[1] == LOGIN_REENTER) {
@@ -59,6 +59,12 @@ void request(char buff[], int sockfd) {
 
     else if (buff[1] == USER_FOUND) {
         processChating(buff, sockfd);
+    }
+    else if (buff[1] == _LOGIN) {
+        processLogin(buff, sockfd);
+    }
+    else if (buff[1] == _SIGNUP) {
+        processSignup(input, sockfd);
     }
 }
 
@@ -137,7 +143,7 @@ void func(int sockfd)
         {
             if ((valread = read(0 , input, BUF_SIZE)) != 0)
             {
-                request(input, sockfd);
+                request(buff, input, sockfd);
             }
         }
     }
@@ -247,20 +253,12 @@ void processChating(char buff[], int sockfd) {
 }
 
 void processSignup(char buff[], int sockfd){
-    int n = 2;
-    buff[0] = REQUEST;
-    buff[1] = SIGNUP;
-    while ((buff[n++] = getchar()) != '\n');
-    buff[n - 1] = '\0';
+    createRequestBuffer(buff, SIGNUP);
     send(sockfd, buff, BUF_SIZE, 0);
 }
 
 void processLogin(char buff[], int sockfd){
-    int n = 2;
-    buff[0] = REQUEST;
-    buff[1] = SIGNUP;
-    while ((buff[n++] = getchar()) != '\n');
-    buff[n - 1] = '\0';
+    createRequestBuffer(buff, LOGIN);
     send(sockfd, buff, BUF_SIZE, 0);
 }
 
@@ -277,4 +275,17 @@ void createRequestBuffer(char* buff, char req) {
     }
     buff[0] = REQUEST;
     buff[1] = SIGNUP;
+}
+
+void processStartInput(char input[], char buff[]) {
+    if (input[0] == '1' && input[1] == '\n'){
+        printConsole("Please enter your username to signup: ");
+        buff[1] = '8';
+    }
+    else if (input[0] == '2' && input[1] == '\n') {
+        printConsole("Please enter your username to login: ");
+        buff[1] = '9';
+    }
+    else
+        errorInput();
 }
