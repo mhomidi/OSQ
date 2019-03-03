@@ -18,6 +18,7 @@ fd_set wrfds, s_ex;
 #define REQUEST 'q'
 #define ADD_EMAIL '2'
 #define CHAT '3'
+#define TIME_GAME '5'
 
 
 //server
@@ -28,9 +29,10 @@ fd_set wrfds, s_ex;
 #define LOGIN_REENTER '4'
 #define USER_NOT_FOUND '5'
 #define USER_FOUND '6'
-#defien WHAT_DO '7'
+#define WHAT_DO '7'
 #define _SIGNUP '8'
 #define _LOGIN '9'
+#define GET_TIME 'a'
 
 #define TRUE 1
 #define FALSE 0
@@ -52,3 +54,5 @@ void processLogin(char buff[], int sockfd);
 void printWorks();
 void processStartInput(char input[], char buff[]);
 void createRequestBuffer(char* buff, char req);
+void printWhatToDo();
+void getTimeOfGame(int sockfd);

@@ -57,6 +57,10 @@ void responseRequest(char buff[], int client_index) {
             send(clients[client_index].socket_id , "p5" , 3 , 0 );
     }
 
+    else if (buff[1] == TIME_GAME) {
+        send(clients[client_index].socket_id , "pa1395/12/22" , 20 , 0 );
+    }
+
 }
 
 

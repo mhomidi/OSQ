@@ -24,15 +24,20 @@ void showRespose(char buff[], int sockfd) {
     else if (buff[1] == SUCCESSFULLY) {
         int n = 0;
         printConsole("You login successfully. ");
-        printWorks();
+        printWhatToDo();
     }
 
     else if (buff[1] == USER_NOT_FOUND) {
         printConsole("This user is not founded or online.");
+        printWhatToDo();
     }
 
     else if (buff[1] == USER_FOUND) {
         printConsole("User is founded. Please start your chat:");
+    }
+    else if (buff[1] == GET_TIME) {
+        printConsole(buff);
+        printWhatToDo();
     }
 }
 
@@ -46,22 +51,17 @@ void request(char buff[], char input[] , int sockfd) {
     }
 
     else if (buff[1] == LOGIN_REENTER) {
-        processLogin(buff, sockfd);
+        processLogin(input, sockfd);
     }
-    else if (buff[1] == SUCCESSFULLY) {
-        int n = 0;
-        processWhatToDo(buff, sockfd);
-    }
-
-    else if (buff[1] == USER_NOT_FOUND) {
-        processWhatToDo(buff, sockfd);
+    else if (buff[1] == SUCCESSFULLY || buff[1] == GET_TIME || buff[1] == USER_NOT_FOUND) {
+        processWhatToDo(input, sockfd);
     }
 
     else if (buff[1] == USER_FOUND) {
-        processChating(buff, sockfd);
+        processChating(input, sockfd);
     }
     else if (buff[1] == _LOGIN) {
-        processLogin(buff, sockfd);
+        processLogin(input, sockfd);
     }
     else if (buff[1] == _SIGNUP) {
         processSignup(input, sockfd);
@@ -134,7 +134,7 @@ void func(int sockfd)
             if (valread) {
 //                puts(buff);
                 if (isResponseOnSocked(buff)) {
-                    puts("asla");
+                    puts(buff);
                     showRespose(buff, sockfd);
                 }
             }
@@ -239,6 +239,9 @@ void processWhatToDo(char buff[], int sockfd) {
 //                puts("kaka4");
 //                break;
             }
+            else if (buff[0] == '3') {
+                getTimeOfGame(buff, sockfd);
+            }
             else
                 errorInput();
 //        }
@@ -268,6 +271,13 @@ void printWorks() {
     printConsole("2.Login");
 }
 
+void printWhatToDo() {
+    printConsole("Select one that you want to do:");
+    printConsole("1. Chat to another");
+    printConsole("2. Get more diamond");
+    printConsole("3. See the time of game");
+}
+
 void createRequestBuffer(char* buff, char req) {
     buff[strlen(buff) - 1] = 0;
     for (int i = strlen(buff); i > 1; --i) {
@@ -288,4 +298,11 @@ void processStartInput(char input[], char buff[]) {
     }
     else
         errorInput();
+}
+
+void getTimeOfGame(int sockfd) {
+    char buff[10] = {0};
+    buff[0] = REQUEST;
+    buff[1] = TIME_GAME;
+    send(sockfd, buff, 10, 0);
 }

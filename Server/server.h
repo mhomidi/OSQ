@@ -15,6 +15,8 @@
 #define ADD_EMAIL '2'
 #define LOGIN '4'
 #define CHAT '3'
+#define TIME_GAME '5'
+
 
 
 

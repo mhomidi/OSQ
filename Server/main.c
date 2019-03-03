@@ -165,7 +165,6 @@ int main(int argc , char *argv[])
             sd = clients[i].socket_id;
             if (sd != -1 && FD_ISSET( sd , &readfds))
             {
-                puts("4");
                 //Check if it was for closing , and also read the
                 //incoming message
                 if ((valread = read( sd , buffer, 1024)) == 0)
