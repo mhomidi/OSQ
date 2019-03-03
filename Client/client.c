@@ -39,6 +39,10 @@ void showRespose(char buff[], int sockfd) {
         printConsole(&buff[2]);
         printWhatToDo();
     }
+    else if (buff[1] == SHOW_NUMBER_OF_DIAMOND) {
+        printConsole(&buff[2]);
+        printWhatToDo();
+    }
 }
 
 
@@ -231,6 +235,9 @@ void processWhatToDo(char buff[], int sockfd) {
             else if (buff[0] == '3') {
                 getTimeOfGame(sockfd);
             }
+            else if (buff[0] == '4') {
+                showClientDiamond(sockfd);
+            }
             else
                 errorInput();
 //        }
@@ -265,6 +272,7 @@ void printWhatToDo() {
     printConsole("1. Chat to another");
     printConsole("2. Get more diamond");
     printConsole("3. See the time of game");
+    printConsole("4. Show my diamond");
 }
 
 void createRequestBuffer(char* buff, char req) {
@@ -306,4 +314,11 @@ void processGetDiamond(char input[], int sockfd) {
         printConsole("Please enter your email:");
         globalBuffer[1] = 'c';
     }
+}
+
+void showClientDiamond(int sockfd) {
+    char buff[10] = {0};
+    buff[0] = REQUEST;
+    buff[1] = GET_NUMBER_OF_DIAMOND;
+    send(sockfd, buff, 10, 0);
 }

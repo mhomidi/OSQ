@@ -19,6 +19,7 @@ fd_set wrfds, s_ex;
 #define ADD_EMAIL '2'
 #define CHAT '3'
 #define TIME_GAME '5'
+#define GET_NUMBER_OF_DIAMOND '6'
 
 
 //server
@@ -35,6 +36,7 @@ fd_set wrfds, s_ex;
 #define GET_TIME 'a'
 #define GET_DIAMOND 'b'
 #define EMAIL 'c'
+#define SHOW_NUMBER_OF_DIAMOND 'd'
 
 #define TRUE 1
 #define FALSE 0
@@ -64,3 +66,4 @@ void printWhatToDo();
 void getTimeOfGame(int sockfd);
 void processSendEmail(char input[], int sockfd);
 void processGetDiamond(char input[], int sockfd);
+void showClientDiamond(int sockfd);

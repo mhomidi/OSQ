@@ -60,6 +60,12 @@ void responseRequest(char buff[], int client_index) {
     else if (buff[1] == TIME_GAME) {
         send(clients[client_index].socket_id , "pa1395/12/22" , 20 , 0 );
     }
+    else if (buff[1] == GET_NUMBER_OF_DIAMOND) {
+        char number[10];
+        itoa(clients[client_index].diamond, number, 10);
+        createResponseBuffer(number, 'd');
+        send(clients[client_index].socket_id , "pa1395/12/22" , 20 , 0 );
+    }
 
 }
 
@@ -88,4 +94,14 @@ int isUsernameExist(char username[]) {
             return i;
     }
     return -1;
+}
+
+
+void createResponseBuffer(char* buff, char res) {
+    buff[strlen(buff) - 1] = 0;
+    for (int i = strlen(buff); i > 1; --i) {
+        buff[i] = buff[i - 2];
+    }
+    buff[0] = 'p';
+    buff[1] = res;
 }

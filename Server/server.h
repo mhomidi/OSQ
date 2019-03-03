@@ -16,6 +16,7 @@
 #define LOGIN '4'
 #define CHAT '3'
 #define TIME_GAME '5'
+#define GET_NUMBER_OF_DIAMOND '6'
 
 
 
@@ -50,3 +51,4 @@ void responseRequest(char buff[], int socketReq);
 void printString(char buff[]);
 void input(char* inputStr);
 int isUsernameExist(char username[]);
+void createResponseBuffer(char* buff, char res);
