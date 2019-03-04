@@ -39,7 +39,7 @@ typedef struct client {
 
 time_t t;
 struct tm tm;
-int day, hour, min;
+int day, hour, min, sec;
 struct timeval a;
 
 int opt;

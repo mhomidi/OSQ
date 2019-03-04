@@ -5,7 +5,11 @@
 void broadCast() {
     int inGame = TRUE;
     while (inGame) {
+        struct timeval interval;
         char buff[BUF_SIZE] = {0};
+
+        interval.tv_sec = 1;
+        interval.tv_usec = 0;
         //clear the socket set
         FD_ZERO(&readfds);
 //        FD_ZERO(&wrfds);
@@ -34,7 +38,11 @@ void broadCast() {
         }
         //wait for an activity on one of the sockets , timeout is NULL ,
         //so wait indefinitely
-        activity = select( max_sd + 1 , &readfds , NULL , NULL , NULL);
+        if (checkSeconds())
+        {
+
+        }
+        activity = select( max_sd + 1 , &readfds , NULL , NULL , &interval);
 
         if ((activity < 0) && (errno!=EINTR))
         {
@@ -42,4 +50,12 @@ void broadCast() {
         }
 
     }
+}
+
+int checkSeconds() {
+    if (tm.tm_sec > sec + 10) {
+        sec = tm.tm_sec;
+        return TRUE;
+    }
+    return FALSE;
 }
