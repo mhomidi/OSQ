@@ -62,9 +62,9 @@ void responseRequest(char buff[], int client_index) {
     }
     else if (buff[1] == GET_NUMBER_OF_DIAMOND) {
         char number[10];
-        itoa(clients[client_index].diamond, number, 10);
+        intToString(clients[client_index].diamond, number);
         createResponseBuffer(number, 'd');
-        send(clients[client_index].socket_id , "pa1395/12/22" , 20 , 0 );
+        send(clients[client_index].socket_id , number , 20 , 0 );
     }
 
 }
@@ -104,4 +104,11 @@ void createResponseBuffer(char* buff, char res) {
     }
     buff[0] = 'p';
     buff[1] = res;
+}
+
+void intToString(int a, char buff[]) {
+    buff[2] = a / 100 + 48;
+    buff[1] = (a / 10) % 10 + 48;
+    buff[0] = a % 10 + 48;
+    buff[3] = 0;
 }

@@ -52,3 +52,4 @@ void printString(char buff[]);
 void input(char* inputStr);
 int isUsernameExist(char username[]);
 void createResponseBuffer(char* buff, char res);
+void intToString(int a, char buff[]);

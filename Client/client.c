@@ -57,7 +57,8 @@ void request(char buff[], char input[] , int sockfd) {
     else if (buff[1] == LOGIN_REENTER) {
         processLogin(input, sockfd);
     }
-    else if (buff[1] == SUCCESSFULLY || buff[1] == GET_TIME || buff[1] == USER_NOT_FOUND) {
+    else if (buff[1] == SUCCESSFULLY || buff[1] == GET_TIME ||
+        buff[1] == USER_NOT_FOUND || buff[1] == SHOW_NUMBER_OF_DIAMOND) {
         processWhatToDo(input, sockfd);
     }
 
