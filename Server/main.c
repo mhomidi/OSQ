@@ -10,9 +10,9 @@ int main(int argc , char *argv[])
     max_clients = 10;
     opt = TRUE;
     day = 4;
-    hour = 14;
-    min = 38;
-    sec = 0;
+    hour = 15;
+    min = 1;
+    sec = 30;
     //a message
     char *message = "p0";
     a.tv_sec = 1;
@@ -68,6 +68,8 @@ int main(int argc , char *argv[])
         char buff[BUF_SIZE] = {0};
         //clear the socket set
         FD_ZERO(&readfds);
+        t = time(NULL);
+        tm = *localtime(&t);
 //        FD_ZERO(&wrfds);
 
         FD_SET(0, &readfds);

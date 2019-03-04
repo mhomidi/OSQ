@@ -3,12 +3,14 @@
 
 
 void broadCast() {
+    char **q = createQuestion();
     int inGame = TRUE;
     int indexOfQuestion = 0;
     while (inGame) {
         struct timeval interval;
         char buff[BUF_SIZE] = {0};
-
+        t = time(NULL);
+        tm = *localtime(&t);
         interval.tv_sec = 1;
         interval.tv_usec = 0;
         //clear the socket set
@@ -45,7 +47,6 @@ void broadCast() {
             indexOfQuestion++;
         }
         activity = select( max_sd + 1 , &readfds , NULL , NULL , &interval);
-
         if ((activity < 0) && (errno!=EINTR))
         {
             printf("select error");
@@ -66,11 +67,16 @@ void sendQuestions(int index) {
     for (i = 0; i < max_clients; i++)
     {
         int sd = clients[i].socket_id;
-        char kaka[100] = "salama? \n khobin";
+        char kaka[100] = "salam? \n khobin";
         if (sd != -1 && FD_ISSET( sd , &readfds)) {
             createResponseBuffer(kaka, 'q');
             send(sd, kaka, strlen(kaka), 0);
         }
 
     }
+}
+
+char** createQuestion() {
+    char q[5][100] =  {"a?","b?","c?","d?","e?"};
+    return q;
 }

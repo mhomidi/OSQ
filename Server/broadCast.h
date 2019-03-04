@@ -2,5 +2,5 @@
 
 void broadCast();
 int checkSeconds();
-void createQuestion(char quest[]);
+void createQuestion();
 void sendQuestions(int index);
