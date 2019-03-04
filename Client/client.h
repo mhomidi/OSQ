@@ -20,6 +20,7 @@ fd_set wrfds, s_ex;
 #define CHAT '3'
 #define TIME_GAME '5'
 #define GET_NUMBER_OF_DIAMOND '6'
+#define REPLY 'r'
 
 
 //server
