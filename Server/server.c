@@ -1,4 +1,4 @@
-#include "server.h"
+#include "broadCast.h"
 
 
 int isRequestOnSocked(char buffer[]) {
@@ -114,5 +114,9 @@ void intToString(int a, char buff[]) {
 }
 
 int checkTimeOfGame() {
-    return (tm.tm_mday == day);
+    return (tm.tm_mday == day) && (tm.tm_hour == hour) && (tm.tm_min == min);
+}
+
+void startTheGame() {
+    broadCast();
 }

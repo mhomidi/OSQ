@@ -13,7 +13,6 @@ int main(int argc , char *argv[])
     hour = 1;
     min = 0;
     //a message
-    struct timeval a;
     char *message = "p0";
     a.tv_sec = 0;
     a.tv_usec = 500;
@@ -102,7 +101,7 @@ int main(int argc , char *argv[])
         }
 
         if (checkTimeOfGame()) {
-
+            startTheGame();
         }
 
         //If something happened on the master socket ,
