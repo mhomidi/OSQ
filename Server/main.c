@@ -11,12 +11,12 @@ int main(int argc , char *argv[])
     opt = TRUE;
     day = 4;
     hour = 14;
-    min = 30;
+    min = 38;
     sec = 0;
     //a message
     char *message = "p0";
-    a.tv_sec = 0;
-    a.tv_usec = 500;
+    a.tv_sec = 1;
+    a.tv_usec = 0;
     //initialise all client_socket[] to 0 so not checked
     for (i = 0; i < max_clients; i++)
     {
@@ -94,13 +94,13 @@ int main(int argc , char *argv[])
         }
         //wait for an activity on one of the sockets , timeout is NULL ,
         //so wait indefinitely
-        activity = select( max_sd + 1 , &readfds , NULL , NULL , NULL);
+        activity = select( max_sd + 1 , &readfds , NULL , NULL , &a);
 
         if ((activity < 0) && (errno!=EINTR))
         {
             printf("select error");
         }
-
+        printf("%d\n", checkTimeOfGame());
         if (checkTimeOfGame()) {
             startTheGame();
         }

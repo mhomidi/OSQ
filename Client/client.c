@@ -144,6 +144,7 @@ void func(int sockfd)
             if (valread) {
 //                puts(buff);
                 if (isResponseOnSocked(globalBuffer)) {
+                    puts(globalBuffer);
                     showRespose(globalBuffer, sockfd);
                 }
             }

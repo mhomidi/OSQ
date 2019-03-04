@@ -66,9 +66,10 @@ void sendQuestions(int index) {
     for (i = 0; i < max_clients; i++)
     {
         int sd = clients[i].socket_id;
+        char kaka[100] = "salama? \n khobin";
         if (sd != -1 && FD_ISSET( sd , &readfds)) {
-            createResponseBuffer(q[index], 'q');
-            send(sd, q[index], strlen(q[index]), 0);
+            createResponseBuffer(kaka, 'q');
+            send(sd, kaka, strlen(kaka), 0);
         }
 
     }

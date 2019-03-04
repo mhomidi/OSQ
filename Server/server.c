@@ -114,7 +114,7 @@ void intToString(int a, char buff[]) {
 }
 
 int checkTimeOfGame() {
-    return (tm.tm_mday == day) && (tm.tm_hour == hour) && (tm.tm_min == min);
+    return (tm.tm_mday >= day) && (tm.tm_hour >= hour) && (tm.tm_min >= min);
 }
 
 void startTheGame() {
