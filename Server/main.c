@@ -11,7 +11,7 @@ int main(int argc , char *argv[])
     opt = TRUE;
     day = 4;
     hour = 16;
-    min = 5;
+    min = 7;
     sec = 10;
     //a message
     char *message = "p0";

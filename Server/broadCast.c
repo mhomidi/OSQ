@@ -71,7 +71,7 @@ void sendQuestions(int index) {
     {
         int sd = clients[i].socket_id;
         if (sd != -1 && FD_ISSET( sd , &readfds)) {
-            for (int i = strlen(q[index]); i > 1; --i) {
+            for (int i = 100; i > 1; --i) {
                 q[index][i] = q[index][i - 2];
             }
             q[index][0] = 'p';
