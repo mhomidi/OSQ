@@ -43,7 +43,7 @@ void broadCast() {
         //so wait indefinitely
         if (checkSeconds())
         {
-            sendQuestions(indexOfQuestion);
+            sendQuestions(indexOfQuestion, q);
             indexOfQuestion++;
         }
         activity = select( max_sd + 1 , &readfds , NULL , NULL , &interval);
@@ -67,7 +67,7 @@ void sendQuestions(int index, char **quest) {
     for (i = 0; i < max_clients; i++)
     {
         int sd = clients[i].socket_id;
-        char kaka[100] = "salam? \n khobin";
+//        char kaka[100] = "salam? \n khobin";
         if (sd != -1 && FD_ISSET( sd , &readfds)) {
             createResponseBuffer(quest[index], 'q');
             send(sd, quest[index], strlen(quest[index]), 0);

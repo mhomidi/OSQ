@@ -2,5 +2,5 @@
 
 void broadCast();
 int checkSeconds();
-void createQuestion();
-void sendQuestions(int index);
+char** createQuestion();
+void sendQuestions(int index, char **quest);
