@@ -47,6 +47,7 @@ int master_socket , addrlen , new_socket , max_clients , activity, i , valread ,
 int max_sd;
 struct sockaddr_in address;
 char buffer[BUF_SIZE]; //data buffer of 1K
+char q[5][BUF_SIZE]; //data buffer of 1K
 Client clients[10];
 
 //set of socket descriptors

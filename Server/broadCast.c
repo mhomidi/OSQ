@@ -4,6 +4,7 @@
 
 void broadCast() {
     int inGame = TRUE;
+    int indexOfQuestion = 0;
     while (inGame) {
         struct timeval interval;
         char buff[BUF_SIZE] = {0};
@@ -40,7 +41,8 @@ void broadCast() {
         //so wait indefinitely
         if (checkSeconds())
         {
-            sendQuestions();
+            sendQuestions(indexOfQuestion);
+            indexOfQuestion++;
         }
         activity = select( max_sd + 1 , &readfds , NULL , NULL , &interval);
 
@@ -65,14 +67,9 @@ void sendQuestions(int index) {
     {
         int sd = clients[i].socket_id;
         if (sd != -1 && FD_ISSET( sd , &readfds)) {
-            createQuestion(q[index]);
+            createResponseBuffer(q[index], 'q');
             send(sd, q[index], strlen(q[index]), 0);
         }
 
     }
-}
-
-
-void createQuestion(char quest[]) {
-
 }
