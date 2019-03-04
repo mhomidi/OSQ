@@ -39,6 +39,7 @@ fd_set wrfds, s_ex;
 #define EMAIL 'c'
 #define SHOW_NUMBER_OF_DIAMOND 'd'
 #define QUESTION 'q'
+#define REPLY_INCORRECT 'z'
 
 #define TRUE 1
 #define FALSE 0

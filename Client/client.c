@@ -46,6 +46,9 @@ void showRespose(char buff[], int sockfd) {
     else if (buff[1] == QUESTION) {
         printConsole(&buff[2]);
     }
+    else if (buff[1] == REPLY_INCORRECT) {
+        printConsole(&buff[2]);
+    }
 }
 
 
@@ -80,7 +83,7 @@ void request(char buff[], char input[] , int sockfd) {
     else if (buff[1] == GET_DIAMOND) {
         processGetDiamond(input, sockfd);
     }
-    else if (buff[1] == QUESTION) {
+    else if (buff[1] == QUESTION || buff[1] == REPLY_INCORRECT) {
         replyQuestion(input, buff,  sockfd);
     }
 }
