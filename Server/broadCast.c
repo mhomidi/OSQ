@@ -59,8 +59,8 @@ void broadCast() {
             {
                 //Check if it was for closing , and also read the
                 //incoming message
-                if ((valread = read( sd , buffer, 1024)) != 0) {
-                    processReply(nuffer, i);
+                if ((valread = read( sd , buff, 1024)) != 0) {
+                    processReply(buff, i);
                 }
             }
             else if (!clients[i].isInGame && sd != -1 && FD_ISSET( sd , &readfds)) {
@@ -96,11 +96,11 @@ void sendQuestions(int index) {
 }
 
 void createQuestion() {
-    char q1[100] = "a?";
-    char q2[100] = "b?";
-    char q3[100] = "c?";
-    char q4[100] = "d?";
-    char q5[100] = "e?";
+    char q1[100] = "1.a?";
+    char q2[100] = "2.b?";
+    char q3[100] = "3.c?";
+    char q4[100] = "4.d?";
+    char q5[100] = "5.e?";
 
     strncpy(q[0], q1, 100);
     strncpy(q[1], q2, 100);
@@ -111,47 +111,60 @@ void createQuestion() {
 
 
 void processReply(char buff[], int client_index) {
+    printConsole(buff);
     if (buff[2] == '1') {
         if (buff[3] != '1') {
             clients[client_index].diamond--;
             if (clients[client_index].diamond == 0) {
                 clients[client_index].isInGame = FALSE;
+                send(clients[client_index].socket_id, "pe", BUF_SIZE, 0);
             }
         }
+        else
+            send(clients[client_index].socket_id, "pe", BUF_SIZE, 0);
     }
     else if (buff[2] == '2') {
         if (buff[3] != '1') {
             clients[client_index].diamond--;
             if (clients[client_index].diamond == 0) {
                 clients[client_index].isInGame = FALSE;
+                send(clients[client_index].socket_id, "pe", BUF_SIZE, 0);
             }
         }
+        else
+            send(clients[client_index].socket_id, "pe", BUF_SIZE, 0);
     }
     else if (buff[2] == '3') {
         if (buff[3] != '1') {
             clients[client_index].diamond--;
             if (clients[client_index].diamond == 0) {
                 clients[client_index].isInGame = FALSE;
+                send(clients[client_index].socket_id, "pe", BUF_SIZE, 0);
             }
         }
-
+        else
+            send(clients[client_index].socket_id, "pe", BUF_SIZE, 0);
     }
     else if (buff[2] == '4') {
         if (buff[3] != '1') {
             clients[client_index].diamond--;
             if (clients[client_index].diamond == 0) {
                 clients[client_index].isInGame = FALSE;
+                send(clients[client_index].socket_id, "pe", BUF_SIZE, 0);
             }
         }
-
+        else
+            send(clients[client_index].socket_id, "pe", BUF_SIZE, 0);
     }
     else if (buff[2] == '5') {
         if (buff[3] != '1') {
             clients[client_index].diamond--;
             if (clients[client_index].diamond == 0) {
                 clients[client_index].isInGame = FALSE;
+                send(clients[client_index].socket_id, "pe", BUF_SIZE, 0);
             }
         }
-
+        else
+            send(clients[client_index].socket_id, "pe", BUF_SIZE, 0);
     }
 }

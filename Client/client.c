@@ -46,8 +46,11 @@ void showRespose(char buff[], int sockfd) {
     else if (buff[1] == QUESTION) {
         printConsole(&buff[2]);
     }
-    else if (buff[1] == REPLY_INCORRECT) {
+    else if (buff[1] == CAN_NOT_ANSWER) {
         printConsole(&buff[2]);
+    }
+    else if (buff[1] == ANSWER_INCORRECT) {
+        printConsole("Your answer is not correct. your diamond decrease.");
     }
 }
 
@@ -83,7 +86,7 @@ void request(char buff[], char input[] , int sockfd) {
     else if (buff[1] == GET_DIAMOND) {
         processGetDiamond(input, sockfd);
     }
-    else if (buff[1] == QUESTION || buff[1] == REPLY_INCORRECT) {
+    else if (buff[1] == QUESTION || buff[1] == CAN_NOT_ANSWER) {
         replyQuestion(input, buff,  sockfd);
     }
 }
