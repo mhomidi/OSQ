@@ -10,8 +10,8 @@ int main(int argc , char *argv[])
     max_clients = 10;
     opt = TRUE;
     day = 4;
-    hour = 15;
-    min = 44;
+    hour = 16;
+    min = 0;
     sec = 10;
     //a message
     char *message = "p0";

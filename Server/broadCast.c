@@ -3,9 +3,9 @@
 
 
 void broadCast() {
-    char **q = createQuestion();
     int inGame = TRUE;
     int indexOfQuestion = 0;
+    createQuestion();
     while (inGame) {
         struct timeval interval;
         char buff[BUF_SIZE] = {0};
@@ -46,7 +46,7 @@ void broadCast() {
         if (checkSeconds())
         {
             puts("karim benzema");
-            sendQuestions(indexOfQuestion, q);
+            sendQuestions(indexOfQuestion);
             indexOfQuestion++;
         }
         activity = select( max_sd + 1 , &readfds , NULL , NULL , &interval);
@@ -66,31 +66,28 @@ int checkSeconds() {
     return FALSE;
 }
 
-void sendQuestions(int index, char *quest[]) {
+void sendQuestions(int index) {
     for (i = 0; i < max_clients; i++)
     {
         int sd = clients[i].socket_id;
-//        char kaka[100] = "salam? \n khobin";
         if (sd != -1 && FD_ISSET( sd , &readfds)) {
-            createResponseBuffer(quest[index], 'q');
-            send(sd, quest[index], strlen(quest[index]), 0);
+            createResponseBuffer(q[index], 'q');
+            send(sd, q[index], strlen(q[index]), 0);
         }
 
     }
 }
 
-char** createQuestion() {
+void createQuestion() {
     char q1[100] = "a?";
     char q2[100] = "b?";
     char q3[100] = "c?";
     char q4[100] = "d?";
     char q5[100] = "e?";
 
-    strcpy(q[0], q1, 100);
-    strcpy(q[1], q2, 100);
-    strcpy(q[2], q3, 100);
-    strcpy(q[3], q4, 100);
-    strcpy(q[4], q5, 100);
-
-    return q;
+    strncpy(q[0], q1, 100);
+    strncpy(q[1], q2, 100);
+    strncpy(q[2], q3, 100);
+    strncpy(q[3], q4, 100);
+    strncpy(q[4], q5, 100);
 }
