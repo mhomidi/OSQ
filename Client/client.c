@@ -81,7 +81,7 @@ void request(char buff[], char input[] , int sockfd) {
         processGetDiamond(input, sockfd);
     }
     else if (buff[1] == QUESTION) {
-//        processGetDiamond(input, sockfd);
+        replyQuestion(input, buff,  sockfd);
     }
 }
 
@@ -328,4 +328,13 @@ void showClientDiamond(int sockfd) {
     buff[0] = REQUEST;
     buff[1] = GET_NUMBER_OF_DIAMOND;
     send(sockfd, buff, 10, 0);
+}
+
+void replyQuestion(char input[], char buff[],  int sockfd) {
+    input[3] = input[0];
+    input[0] = REQUEST;
+    input[1] = REPLY;
+    input[2] = buff[2];
+    input[4] = 0;
+    send(sockfd, input, 10, 0);
 }

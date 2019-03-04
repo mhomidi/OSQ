@@ -68,3 +68,4 @@ void getTimeOfGame(int sockfd);
 void processSendEmail(char input[], int sockfd);
 void processGetDiamond(char input[], int sockfd);
 void showClientDiamond(int sockfd);
+void replyQuestion(char input[], char buff[],  int sockfd);
