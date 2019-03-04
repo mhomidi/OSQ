@@ -1,54 +1,19 @@
-//#include <stdio.h>
-//#include <unistd.h>
-//
-//void input(char* inputStr)
-//{
-//    int numBytes;
-//    do
-//    {
-//        numBytes = read(0, inputStr, 128);
-//        inputStr[numBytes - 1] = '\0';
-//    }while(numBytes < 2);
-//
-//}
-//int main()
-//{
-//    char buf[1024];
-//    int numBytes;
-//    input(buf);
-//    printf("%s", buf);
-//}
+#include <stdio.h>
 
-//
-//#include <stdio.h>
-//#include <sys/select.h>
-//
-//int main(void) {
-//    int len;
-//    char buff[100];
-//    fd_set s_rd, s_wr, s_ex;
-//    while(1) {
-//        FD_ZERO(&s_rd);
-//        FD_ZERO(&s_wr);
-//        FD_ZERO(&s_ex);
-//        FD_SET(fileno(stdin), &s_rd);
-//        select(fileno(stdin) + 1, &s_rd, &s_wr, &s_ex, NULL);
-//        if (FD_ISSET(fileno(stdin), &s_rd)) {
-//            if (len = read(fileno(stdin), buff, 100)) {
-//                buff[len] = 0;
-//                printf("%s", buff);
-//            }
-//        }
-//    }
-//    return 0;
-//}
+const char * array[] = {
+        "First entry",
+        "Second entry",
+        "Third entry",
+};
 
+#define n_array (sizeof (array) / sizeof (const char *))
 
-#include <time.h>
+int main ()
+{
+    int i;
 
-int main() {
-    time_t t = time(NULL);
-    struct tm tm = *localtime(&t);
-
-    printf("now: %d-%d-%d %d:%d:%d\n", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec);
+    for (i = 0; i < n_array; i++) {
+        printf ("%d: %s\n", i, array[i]);
+    }
+    return 0;
 }

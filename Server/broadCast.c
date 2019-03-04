@@ -16,7 +16,9 @@ void broadCast() {
         //clear the socket set
         FD_ZERO(&readfds);
 //        FD_ZERO(&wrfds);
-
+        puts("111111");
+        puts(q[indexOfQuestion]);
+        puts("222222");
         FD_SET(0, &readfds);
         //add master socket to set
         FD_SET(master_socket, &readfds);
@@ -43,6 +45,7 @@ void broadCast() {
         //so wait indefinitely
         if (checkSeconds())
         {
+            puts("karim benzema");
             sendQuestions(indexOfQuestion, q);
             indexOfQuestion++;
         }
@@ -63,7 +66,7 @@ int checkSeconds() {
     return FALSE;
 }
 
-void sendQuestions(int index, char **quest) {
+void sendQuestions(int index, char *quest[]) {
     for (i = 0; i < max_clients; i++)
     {
         int sd = clients[i].socket_id;
@@ -77,6 +80,17 @@ void sendQuestions(int index, char **quest) {
 }
 
 char** createQuestion() {
-    char q[5][100] =  {"a?","b?","c?","d?","e?"};
+    char q1[100] = "a?";
+    char q2[100] = "b?";
+    char q3[100] = "c?";
+    char q4[100] = "d?";
+    char q5[100] = "e?";
+
+    strcpy(q[0], q1, 100);
+    strcpy(q[1], q2, 100);
+    strcpy(q[2], q3, 100);
+    strcpy(q[3], q4, 100);
+    strcpy(q[4], q5, 100);
+
     return q;
 }
