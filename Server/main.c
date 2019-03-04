@@ -4,8 +4,14 @@
 
 int main(int argc , char *argv[])
 {
+
+    t = time(NULL);
+    tm = *localtime(&t);
     max_clients = 10;
     opt = TRUE;
+    day = 100;
+    hour = 1;
+    min = 0;
     //a message
     struct timeval a;
     char *message = "p0";
@@ -94,20 +100,10 @@ int main(int argc , char *argv[])
         {
             printf("select error");
         }
-//
-//        for (int j = 0; j < max_clients; ++j) {
-//            printf("%d \t", clients[j].socket_id);
-//            fflush(stdout);
-//            if(clients[j].socket_id != 0 ) {
-//                read(clients[j].socket_id, buff, sizeof(buff));
-//                printf("\nis req: %d\n", isRequestOnSocked(buff));
-//                if (isRequestOnSocked(buff)) {
-//                    responseRequest(buff, j);
-//                }
-//                bzero(buff, BUF_SIZE);
-//            }
-//        }
 
+        if (checkTimeOfGame()) {
+
+        }
 
         //If something happened on the master socket ,
         //then its an incoming connection

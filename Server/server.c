@@ -112,3 +112,7 @@ void intToString(int a, char buff[]) {
     buff[0] = a % 10 + 48;
     buff[3] = 0;
 }
+
+int checkTimeOfGame() {
+    return (tm.tm_mday == day);
+}

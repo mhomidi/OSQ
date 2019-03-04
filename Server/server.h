@@ -36,6 +36,11 @@ typedef struct client {
 } Client;
 
 
+
+time_t t;
+struct tm tm;
+int day, hour, min;
+
 int opt;
 int master_socket , addrlen , new_socket , max_clients , activity, i , valread , sd;
 int max_sd;
@@ -53,3 +58,4 @@ void input(char* inputStr);
 int isUsernameExist(char username[]);
 void createResponseBuffer(char* buff, char res);
 void intToString(int a, char buff[]);
+int checkTimeOfGame();
