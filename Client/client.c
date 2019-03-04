@@ -89,7 +89,7 @@ void request(char buff[], char input[] , int sockfd) {
     else if (buff[1] == GET_DIAMOND) {
         processGetDiamond(input, sockfd);
     }
-    else if (buff[1] == QUESTION || buff[1] == CAN_NOT_ANSWER) {
+    else if (buff[1] == QUESTION || buff[1] == CAN_NOT_ANSWER || buff[1] == ANSWERED) {
         replyQuestion(input, buff,  sockfd);
     }
 }
