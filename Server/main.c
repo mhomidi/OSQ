@@ -81,6 +81,7 @@ int main(int argc , char *argv[])
         //add child sockets to set
         for ( i = 0 ; i < max_clients ; i++)
         {
+            clients[i].isInGame = TRUE;
             //socket descriptor
             sd = clients[i].socket_id;
 

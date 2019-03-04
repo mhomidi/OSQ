@@ -6,3 +6,4 @@ void broadCast();
 int checkSeconds();
 void createQuestion();
 void sendQuestions(int index);
+void processReply(char buff[], int client_index);

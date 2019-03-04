@@ -34,6 +34,7 @@ typedef struct client {
     int socket_id;
     int port;
     char email[BUF_SIZE];
+    int isInGame;
 } Client;
 
 

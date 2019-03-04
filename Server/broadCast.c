@@ -52,6 +52,22 @@ void broadCast() {
             printf("select error");
         }
 
+        for (i = 0; i < max_clients; i++)
+        {
+            sd = clients[i].socket_id;
+            if (sd != -1 && FD_ISSET( sd , &readfds) && clients[i].isInGame)
+            {
+                //Check if it was for closing , and also read the
+                //incoming message
+                if ((valread = read( sd , buffer, 1024)) != 0) {
+                    processReply(nuffer, i);
+                }
+            }
+            else if (!clients[i].isInGame && sd != -1 && FD_ISSET( sd , &readfds)) {
+                send(sd, "pzYou can't answer the questions.", BUF_SIZE, 0);
+            }
+        }
+
     }
 }
 
@@ -91,4 +107,51 @@ void createQuestion() {
     strncpy(q[2], q3, 100);
     strncpy(q[3], q4, 100);
     strncpy(q[4], q5, 100);
+}
+
+
+void processReply(char buff[], int client_index) {
+    if (buff[2] == '1') {
+        if (buff[3] != '1') {
+            clients[client_index].diamond--;
+            if (clients[client_index].diamond == 0) {
+                clients[client_index].isInGame = FALSE;
+            }
+        }
+    }
+    else if (buff[2] == '2') {
+        if (buff[3] != '1') {
+            clients[client_index].diamond--;
+            if (clients[client_index].diamond == 0) {
+                clients[client_index].isInGame = FALSE;
+            }
+        }
+    }
+    else if (buff[2] == '3') {
+        if (buff[3] != '1') {
+            clients[client_index].diamond--;
+            if (clients[client_index].diamond == 0) {
+                clients[client_index].isInGame = FALSE;
+            }
+        }
+
+    }
+    else if (buff[2] == '4') {
+        if (buff[3] != '1') {
+            clients[client_index].diamond--;
+            if (clients[client_index].diamond == 0) {
+                clients[client_index].isInGame = FALSE;
+            }
+        }
+
+    }
+    else if (buff[2] == '5') {
+        if (buff[3] != '1') {
+            clients[client_index].diamond--;
+            if (clients[client_index].diamond == 0) {
+                clients[client_index].isInGame = FALSE;
+            }
+        }
+
+    }
 }

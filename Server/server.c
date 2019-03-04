@@ -66,6 +66,9 @@ void responseRequest(char buff[], int client_index) {
         createResponseBuffer(number, 'd');
         send(clients[client_index].socket_id , number , 20 , 0 );
     }
+    else if (buff[1] == REPLY) {
+        processReply(buff, client_index);
+    }
 
 }
 
