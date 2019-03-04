@@ -120,3 +120,8 @@ int checkTimeOfGame() {
 void startTheGame() {
     broadCast();
 }
+
+
+void printConsole(char in[]) {
+    puts(in);
+}

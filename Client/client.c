@@ -43,6 +43,9 @@ void showRespose(char buff[], int sockfd) {
         printConsole(&buff[2]);
         printWhatToDo();
     }
+    else if (buff[1] == QUESTION) {
+        printConsole(&buff[2]);
+    }
 }
 
 
@@ -76,6 +79,9 @@ void request(char buff[], char input[] , int sockfd) {
     }
     else if (buff[1] == GET_DIAMOND) {
         processGetDiamond(input, sockfd);
+    }
+    else if (buff[1] == QUESTION) {
+//        processGetDiamond(input, sockfd);
     }
 }
 
@@ -144,7 +150,6 @@ void func(int sockfd)
             if (valread) {
 //                puts(buff);
                 if (isResponseOnSocked(globalBuffer)) {
-                    puts(globalBuffer);
                     showRespose(globalBuffer, sockfd);
                 }
             }

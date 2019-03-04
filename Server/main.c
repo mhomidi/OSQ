@@ -11,7 +11,7 @@ int main(int argc , char *argv[])
     opt = TRUE;
     day = 4;
     hour = 16;
-    min = 7;
+    min = 14;
     sec = 10;
     //a message
     char *message = "p0";
@@ -61,7 +61,7 @@ int main(int argc , char *argv[])
 
     //accept the incoming connection
     addrlen = sizeof(address);
-    puts("Waiting for connections ...");
+    printConsole("Waiting for connections ...");
 
     while(TRUE)
     {
@@ -102,7 +102,6 @@ int main(int argc , char *argv[])
         {
             printf("select error");
         }
-        printf("%d\n", checkTimeOfGame());
         if (checkTimeOfGame()) {
             startTheGame();
         }
@@ -128,7 +127,7 @@ int main(int argc , char *argv[])
                 perror("send");
             }
 
-            puts("Welcome message sent successfully");
+            printConsole("Welcome message sent successfully");
 
             //add new socket to array of sockets
             for (int k = 0; k < max_clients; k++)

@@ -16,9 +16,7 @@ void broadCast() {
         //clear the socket set
         FD_ZERO(&readfds);
 //        FD_ZERO(&wrfds);
-        puts("111111");
-        puts(q[indexOfQuestion]);
-        puts("222222");
+
         FD_SET(0, &readfds);
         //add master socket to set
         FD_SET(master_socket, &readfds);
@@ -45,7 +43,6 @@ void broadCast() {
         //so wait indefinitely
         if (checkSeconds())
         {
-            puts("karim benzema");
             sendQuestions(indexOfQuestion);
             indexOfQuestion++;
         }
