@@ -43,6 +43,8 @@ void broadCast() {
         //so wait indefinitely
         if (checkSeconds())
         {
+            if (indexOfQuestion == 5)
+                break;
             sendQuestions(indexOfQuestion);
             indexOfQuestion++;
         }
@@ -117,13 +119,14 @@ void processReply(char buff[], int client_index) {
             clients[client_index].diamond--;
             if (clients[client_index].diamond == 0) {
                 clients[client_index].isInGame = FALSE;
+                clients[client_index].answers[0] = TRUE;
                 send(clients[client_index].socket_id, "pe", BUF_SIZE, 0);
             }
         }
-        else
-            send(clients[client_index].socket_id, "pe", BUF_SIZE, 0);
+        else if (clients[client_index].answers[0])
+            send(clients[client_index].socket_id, "pf", BUF_SIZE, 0);
     }
-    else if (buff[2] == '2') {
+    else if (buff[2] == '2' && !clients[client_index].answers[1]) {
         if (buff[3] != '1') {
             clients[client_index].diamond--;
             if (clients[client_index].diamond == 0) {
@@ -131,10 +134,10 @@ void processReply(char buff[], int client_index) {
                 send(clients[client_index].socket_id, "pe", BUF_SIZE, 0);
             }
         }
-        else
-            send(clients[client_index].socket_id, "pe", BUF_SIZE, 0);
+        else if (clients[client_index].answers[1])
+            send(clients[client_index].socket_id, "pf", BUF_SIZE, 0);
     }
-    else if (buff[2] == '3') {
+    else if (buff[2] == '3' && !clients[client_index].answers[2]) {
         if (buff[3] != '1') {
             clients[client_index].diamond--;
             if (clients[client_index].diamond == 0) {
@@ -142,10 +145,10 @@ void processReply(char buff[], int client_index) {
                 send(clients[client_index].socket_id, "pe", BUF_SIZE, 0);
             }
         }
-        else
-            send(clients[client_index].socket_id, "pe", BUF_SIZE, 0);
+        else if (clients[client_index].answers[2])
+            send(clients[client_index].socket_id, "pf", BUF_SIZE, 0);
     }
-    else if (buff[2] == '4') {
+    else if (buff[2] == '4' && !clients[client_index].answers[3]) {
         if (buff[3] != '1') {
             clients[client_index].diamond--;
             if (clients[client_index].diamond == 0) {
@@ -153,10 +156,10 @@ void processReply(char buff[], int client_index) {
                 send(clients[client_index].socket_id, "pe", BUF_SIZE, 0);
             }
         }
-        else
-            send(clients[client_index].socket_id, "pe", BUF_SIZE, 0);
+        else if (clients[client_index].answers[3])
+            send(clients[client_index].socket_id, "pf", BUF_SIZE, 0);
     }
-    else if (buff[2] == '5') {
+    else if (buff[2] == '5' && !clients[client_index].answers[4]) {
         if (buff[3] != '1') {
             clients[client_index].diamond--;
             if (clients[client_index].diamond == 0) {
@@ -164,7 +167,7 @@ void processReply(char buff[], int client_index) {
                 send(clients[client_index].socket_id, "pe", BUF_SIZE, 0);
             }
         }
-        else
-            send(clients[client_index].socket_id, "pe", BUF_SIZE, 0);
+        else if (clients[client_index].answers[4])
+            send(clients[client_index].socket_id, "pf", BUF_SIZE, 0);
     }
 }

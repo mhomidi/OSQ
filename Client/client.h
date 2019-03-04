@@ -41,6 +41,7 @@ fd_set wrfds, s_ex;
 #define QUESTION 'q'
 #define CAN_NOT_ANSWER 'z'
 #define ANSWER_INCORRECT 'e'
+#define ANSWERED 'f'
 
 #define TRUE 1
 #define FALSE 0

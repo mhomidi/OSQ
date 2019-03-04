@@ -52,6 +52,9 @@ void showRespose(char buff[], int sockfd) {
     else if (buff[1] == ANSWER_INCORRECT) {
         printConsole("Your answer is not correct. your diamond decrease.");
     }
+    else if (buff[1] == ANSWERED) {
+        printConsole("You answered this question");
+    }
 }
 
 

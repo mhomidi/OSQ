@@ -24,7 +24,7 @@ void responseRequest(char buff[], int client_index) {
 
     else if (buff[1] == LOGIN) {
         int index;
-        if (index = isUsernameExist(&buff[2]) != -1) {
+        if ((index = isUsernameExist(&buff[2])) != -1) {
             send(clients[client_index].socket_id, "p2", 3, 0);
             if (index != client_index) {
                 strncpy(clients[index].name, clients[client_index].name, sizeof(clients[client_index].name));

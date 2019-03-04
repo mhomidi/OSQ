@@ -11,8 +11,8 @@ int main(int argc , char *argv[])
     opt = TRUE;
     day = 4;
     hour = 22;
-    min = 1;
-    sec = 0;
+    min = 20;
+    sec = 20;
     //a message
     char *message = "p0";
     a.tv_sec = 1;
@@ -82,6 +82,9 @@ int main(int argc , char *argv[])
         for ( i = 0 ; i < max_clients ; i++)
         {
             clients[i].isInGame = TRUE;
+            for (int j = 0; j < 5; ++j) {
+                clients[i].answers[j] = FALSE;
+            }
             //socket descriptor
             sd = clients[i].socket_id;
 
