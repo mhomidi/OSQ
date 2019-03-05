@@ -56,8 +56,11 @@ void showRespose(char buff[], int sockfd) {
         printConsole("You answered this question");
     }
     else if (buff[1] == END_GAME) {
-        printConsole("The competition finished");
+        printConsole("The competition is finished");
         printWhatToDo();
+    }
+    else if (buff[1] == START_GAME) {
+        printConsole("The competition will be started less than 10 seconds. please don\'t do any work.");
     }
     else if (buff[1] == RECIEVE_CHAT) {
         printConsole(buff + 2);

@@ -124,7 +124,6 @@ void processReply(char buff[], int client_index) {
             if (clients[client_index].diamond == 0) {
                 clients[client_index].isInGame = FALSE;
             }
-            send(clients[client_index].socket_id, "pe1", BUF_SIZE, 0);
         }
     }
     else if (buff[2] == '1' && clients[client_index].answers[0]) {
@@ -137,7 +136,6 @@ void processReply(char buff[], int client_index) {
             if (clients[client_index].diamond == 0) {
                 clients[client_index].isInGame = FALSE;
             }
-            send(clients[client_index].socket_id, "pe2", BUF_SIZE, 0);
         }
     }
     else if (buff[2] == '2' && clients[client_index].answers[1])
@@ -150,7 +148,6 @@ void processReply(char buff[], int client_index) {
             if (clients[client_index].diamond == 0) {
                 clients[client_index].isInGame = FALSE;
             }
-            send(clients[client_index].socket_id, "pe3", BUF_SIZE, 0);
         }
     }
     else if (buff[2] == '3' && clients[client_index].answers[2])
@@ -163,7 +160,6 @@ void processReply(char buff[], int client_index) {
             if (clients[client_index].diamond == 0) {
                 clients[client_index].isInGame = FALSE;
             }
-            send(clients[client_index].socket_id, "pe4", BUF_SIZE, 0);
         }
     }
     else if (buff[2] == '4' && clients[client_index].answers[3])
@@ -175,7 +171,6 @@ void processReply(char buff[], int client_index) {
             if (clients[client_index].diamond == 0) {
                 clients[client_index].isInGame = FALSE;
             }
-            send(clients[client_index].socket_id, "pe5", BUF_SIZE, 0);
         }
     }
     else if (buff[2] == '5' && clients[client_index].answers[4])

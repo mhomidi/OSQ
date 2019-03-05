@@ -46,6 +46,7 @@ fd_set wrfds, s_ex;
 #define END_GAME 'g'
 #define APPLY_CHAT 'h'
 #define RECIEVE_CHAT 'i'
+#define START_GAME 'j'
 
 #define TRUE 1
 #define FALSE 0
