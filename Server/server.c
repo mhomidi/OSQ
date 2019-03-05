@@ -47,10 +47,7 @@ void responseRequest(char buff[], int client_index) {
     else if (buff[1] == CHAT){
         int index;
         if ((index = isUsernameExist(&buff[2])) != -1 && clients[index].socket_id != -1){
-            printf("%d    %d  \n", index, client_index);
-            printConsole(buff + 2);
-            printConsole(clients[index].name);
-            printConsole(clients[client_index].name);
+            printConsole("Two users started to chat together");
             send(clients[index].socket_id , "p6" , 3 , 0 );
             send(clients[client_index].socket_id , "p6" , 3 , 0 );
             strncpy(clients[client_index].chatName, clients[index].name, BUF_SIZE);

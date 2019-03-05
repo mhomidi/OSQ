@@ -1,21 +1,19 @@
+
 #include <stdio.h>
-#include <string.h> //strlen
 #include <stdlib.h>
-#include <errno.h>
-#include <unistd.h> //close
-#include <arpa/inet.h> //close
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <sys/time.h> //FD_SET, FD_ISSET, FD_ZERO macros
+#include <string.h>
 
-
-#define n_array (sizeof (array) / sizeof (const char *))
-
-int main ()
+int main()
 {
-    for (int i = 0; i < 10; ++i) {
-        write(1, "salam hala khobi sha?\n", strlen("salam hala khobi sha?\n") + 1);
-    }
+    int a=54325;
+    char buffer[20];
+    itoa(a,buffer,2);   // here 2 means binary
+    printf("Binary value = %s\n", buffer);
+
+    itoa(a,buffer,10);   // here 10 means decimal
+    printf("Decimal value = %s\n", buffer);
+
+    itoa(a,buffer,16);   // here 16 means Hexadecimal
+    printf("Hexadecimal value = %s\n", buffer);
     return 0;
 }
