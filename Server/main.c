@@ -10,9 +10,9 @@ int main(int argc , char *argv[])
     max_clients = 10;
     opt = TRUE;
     day = 5;
-    hour = 7;
-    min = 23;
-    sec = 30;
+    hour = 10;
+    min = 35;
+    sec = 40;
     //a message
     char *message = "p0";
     a.tv_sec = 1;
@@ -107,7 +107,14 @@ int main(int argc , char *argv[])
             printf("select error");
         }
         if (checkTimeOfGame()) {
+            printConsole("The competition will start 10 sec later");
             startTheGame();
+            printConsole("The competition finished");
+            for (int j = 0; j < max_clients; ++j) {
+                if (clients[j].socket_id != -1) {
+                    send(clients[j].socket_id, "pg", 10, 0);
+                }
+            }
         }
 
         //If something happened on the master socket ,

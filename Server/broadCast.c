@@ -125,10 +125,9 @@ void processReply(char buff[], int client_index) {
             }
             send(clients[client_index].socket_id, "pe1", BUF_SIZE, 0);
         }
-        else if (clients[client_index].answers[0]) {
-            puts("111111");
-            send(clients[client_index].socket_id, "pf1", BUF_SIZE, 0);
-        }
+    }
+    else if (buff[2] == '1' && clients[client_index].answers[0]) {
+        send(clients[client_index].socket_id, "pf1", BUF_SIZE, 0);
     }
     else if (buff[2] == '2' && !clients[client_index].answers[1]) {
         clients[client_index].answers[1] = TRUE;
@@ -139,9 +138,10 @@ void processReply(char buff[], int client_index) {
             }
             send(clients[client_index].socket_id, "pe2", BUF_SIZE, 0);
         }
-        else if (clients[client_index].answers[1])
-            send(clients[client_index].socket_id, "pf2", BUF_SIZE, 0);
     }
+    else if (buff[2] == '2' && clients[client_index].answers[1])
+        send(clients[client_index].socket_id, "pf2", BUF_SIZE, 0);
+
     else if (buff[2] == '3' && !clients[client_index].answers[2]) {
         clients[client_index].answers[2] = TRUE;
         if (buff[3] != '1') {
@@ -151,9 +151,10 @@ void processReply(char buff[], int client_index) {
             }
             send(clients[client_index].socket_id, "pe3", BUF_SIZE, 0);
         }
-        else if (clients[client_index].answers[2])
-            send(clients[client_index].socket_id, "pf3", BUF_SIZE, 0);
     }
+    else if (buff[2] == '3' && clients[client_index].answers[2])
+        send(clients[client_index].socket_id, "pf3", BUF_SIZE, 0);
+
     else if (buff[2] == '4' && !clients[client_index].answers[3]) {
         clients[client_index].answers[3] = TRUE;
         if (buff[3] != '1') {
@@ -163,9 +164,9 @@ void processReply(char buff[], int client_index) {
             }
             send(clients[client_index].socket_id, "pe4", BUF_SIZE, 0);
         }
-        else if (clients[client_index].answers[3])
-            send(clients[client_index].socket_id, "pf4", BUF_SIZE, 0);
     }
+    else if (buff[2] == '4' && clients[client_index].answers[3])
+        send(clients[client_index].socket_id, "pf4", BUF_SIZE, 0);
     else if (buff[2] == '5' && !clients[client_index].answers[4]) {
         clients[client_index].answers[4] = TRUE;
         if (buff[3] != '1') {
@@ -175,7 +176,7 @@ void processReply(char buff[], int client_index) {
             }
             send(clients[client_index].socket_id, "pe5", BUF_SIZE, 0);
         }
-        else if (clients[client_index].answers[4])
-            send(clients[client_index].socket_id, "pf5", BUF_SIZE, 0);
     }
+    else if (buff[2] == '5' && clients[client_index].answers[4])
+        send(clients[client_index].socket_id, "pf5", BUF_SIZE, 0);
 }

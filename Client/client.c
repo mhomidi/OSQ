@@ -55,6 +55,10 @@ void showRespose(char buff[], int sockfd) {
     else if (buff[1] == ANSWERED) {
         printConsole("You answered this question");
     }
+    else if (buff[1] == END_GAME) {
+        printConsole("The competition finished");
+        printWhatToDo();
+    }
 }
 
 
@@ -71,7 +75,7 @@ void request(char buff[], char input[] , int sockfd) {
         processLogin(input, sockfd);
     }
     else if (buff[1] == SUCCESSFULLY || buff[1] == GET_TIME ||
-        buff[1] == USER_NOT_FOUND || buff[1] == SHOW_NUMBER_OF_DIAMOND) {
+        buff[1] == USER_NOT_FOUND || buff[1] == SHOW_NUMBER_OF_DIAMOND || buff[1] == END_GAME) {
         processWhatToDo(input, sockfd);
     }
 

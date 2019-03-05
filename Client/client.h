@@ -42,6 +42,7 @@ fd_set wrfds, s_ex;
 #define CAN_NOT_ANSWER 'z'
 #define ANSWER_INCORRECT 'e'
 #define ANSWERED 'f'
+#define END_GAME 'g'
 
 #define TRUE 1
 #define FALSE 0
