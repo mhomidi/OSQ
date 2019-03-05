@@ -9,10 +9,10 @@ int main(int argc , char *argv[])
     tm = *localtime(&t);
     max_clients = 10;
     opt = TRUE;
-    day = 4;
-    hour = 22;
-    min = 36;
-    sec = 20;
+    day = 5;
+    hour = 7;
+    min = 23;
+    sec = 30;
     //a message
     char *message = "p0";
     a.tv_sec = 1;

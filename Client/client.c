@@ -59,6 +59,7 @@ void showRespose(char buff[], int sockfd) {
 
 
 void request(char buff[], char input[] , int sockfd) {
+    printConsole(buff);
     if (buff[1] == USERNAME_REENTER){
         processSignup(buff, sockfd);
     }
@@ -89,7 +90,7 @@ void request(char buff[], char input[] , int sockfd) {
     else if (buff[1] == GET_DIAMOND) {
         processGetDiamond(input, sockfd);
     }
-    else if (buff[1] == QUESTION || buff[1] == CAN_NOT_ANSWER || buff[1] == ANSWERED) {
+    else if (buff[1] == QUESTION || buff[1] == CAN_NOT_ANSWER || buff[1] == ANSWERED || ANSWER_INCORRECT) {
         replyQuestion(input, buff,  sockfd);
     }
 }

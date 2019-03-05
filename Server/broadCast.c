@@ -76,7 +76,7 @@ void broadCast() {
 }
 
 int checkSeconds() {
-    if (tm.tm_sec > sec + 10) {
+    if (tm.tm_sec > sec + 4) {
         sec = tm.tm_sec;
         return TRUE;
     }
@@ -93,7 +93,7 @@ void sendQuestions(int index) {
             }
             q[index][0] = 'p';
             q[index][1] = 'q';
-            send(sd, q[index], 5, 0);
+            send(sd, q[index], 100, 0);
         }
 
     }
@@ -116,13 +116,13 @@ void createQuestion() {
 
 void processReply(char buff[], int client_index) {
     printConsole(buff);
-    if (buff[2] == '1') {
+    if (buff[2] == '1' && !clients[client_index].answers[0]) {
+        clients[client_index].answers[0] = TRUE;
         if (buff[3] != '1') {
             clients[client_index].diamond--;
             if (clients[client_index].diamond == 0) {
                 clients[client_index].isInGame = FALSE;
             }
-            clients[client_index].answers[0] = TRUE;
             send(clients[client_index].socket_id, "pe1", BUF_SIZE, 0);
         }
         else if (clients[client_index].answers[0]) {
@@ -131,48 +131,48 @@ void processReply(char buff[], int client_index) {
         }
     }
     else if (buff[2] == '2' && !clients[client_index].answers[1]) {
+        clients[client_index].answers[1] = TRUE;
         if (buff[3] != '1') {
             clients[client_index].diamond--;
             if (clients[client_index].diamond == 0) {
                 clients[client_index].isInGame = FALSE;
             }
-            clients[client_index].answers[0] = TRUE;
             send(clients[client_index].socket_id, "pe2", BUF_SIZE, 0);
         }
         else if (clients[client_index].answers[1])
             send(clients[client_index].socket_id, "pf2", BUF_SIZE, 0);
     }
     else if (buff[2] == '3' && !clients[client_index].answers[2]) {
+        clients[client_index].answers[2] = TRUE;
         if (buff[3] != '1') {
             clients[client_index].diamond--;
             if (clients[client_index].diamond == 0) {
                 clients[client_index].isInGame = FALSE;
             }
-            clients[client_index].answers[0] = TRUE;
             send(clients[client_index].socket_id, "pe3", BUF_SIZE, 0);
         }
         else if (clients[client_index].answers[2])
             send(clients[client_index].socket_id, "pf3", BUF_SIZE, 0);
     }
     else if (buff[2] == '4' && !clients[client_index].answers[3]) {
+        clients[client_index].answers[3] = TRUE;
         if (buff[3] != '1') {
             clients[client_index].diamond--;
             if (clients[client_index].diamond == 0) {
                 clients[client_index].isInGame = FALSE;
             }
-            clients[client_index].answers[0] = TRUE;
             send(clients[client_index].socket_id, "pe4", BUF_SIZE, 0);
         }
         else if (clients[client_index].answers[3])
             send(clients[client_index].socket_id, "pf4", BUF_SIZE, 0);
     }
     else if (buff[2] == '5' && !clients[client_index].answers[4]) {
+        clients[client_index].answers[4] = TRUE;
         if (buff[3] != '1') {
             clients[client_index].diamond--;
             if (clients[client_index].diamond == 0) {
                 clients[client_index].isInGame = FALSE;
             }
-            clients[client_index].answers[0] = TRUE;
             send(clients[client_index].socket_id, "pe5", BUF_SIZE, 0);
         }
         else if (clients[client_index].answers[4])
