@@ -55,6 +55,10 @@ struct sockaddr_in address;
 char buffer[BUF_SIZE]; //data buffer of 1K
 Client clients[10];
 
+clock_t clock1;
+clock_t clock2;
+
+
 //set of socket descriptors
 fd_set readfds;
 

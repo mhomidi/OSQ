@@ -1,19 +1,13 @@
 
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
+#include <time.h>
+#include <math.h>
 int main()
 {
-    int a=54325;
-    char buffer[20];
-    itoa(a,buffer,2);   // here 2 means binary
-    printf("Binary value = %s\n", buffer);
-
-    itoa(a,buffer,10);   // here 10 means decimal
-    printf("Decimal value = %s\n", buffer);
-
-    itoa(a,buffer,16);   // here 16 means Hexadecimal
-    printf("Hexadecimal value = %s\n", buffer);
-    return 0;
+    int i;
+    clock_t CPU_time_1 = clock();
+    printf("CPU start time is : %d \n", CPU_time_1);
+    for(i = 0; i < 150000000; i++);
+    clock_t CPU_time_2 = clock();
+    printf("CPU end time is : %d", CPU_time_2);
 }

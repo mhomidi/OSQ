@@ -10,8 +10,8 @@ int main(int argc , char *argv[])
     max_clients = 10;
     opt = TRUE;
     day = 5;
-    hour = 22;
-    min = 19;
+    hour = 23;
+    min = 6;
     sec = 20;
     //a message
     char *message = "p0";
@@ -111,8 +111,6 @@ int main(int argc , char *argv[])
             for (int j = 0; j < max_clients; ++j) {
                 if (clients[j].socket_id != -1) {
                     send(clients[j].socket_id, "pj", 10, 0);
-                    if (clients[j].isInGame)
-                        clients[j].diamond += 2;
                 }
             }
             startTheGame();

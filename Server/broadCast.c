@@ -21,8 +21,8 @@ void broadCast() {
         FD_SET(master_socket, &readfds);
 //        FD_SET(master_socket, &wrfds);
         max_sd = master_socket;
-        printf(".");
         //add child sockets to set
+        puts(".");
         for ( i = 0 ; i < max_clients ; i++)
         {
             //socket descriptor
@@ -94,6 +94,12 @@ int checkSeconds() {
         return TRUE;
     }
     return FALSE;
+//    if (clock1 > clock2 + 4) {
+//        clock2 = clock1;
+//        return TRUE;
+//    }
+//    return FALSE;
+
 }
 
 void sendQuestions(int index) {
@@ -134,6 +140,7 @@ void processReply(char buff[], int client_index) {
     if (buff[2] == '1' && !clients[client_index].answers[0]) {
         clients[client_index].answers[0] = TRUE;
         if (buff[3] != '1') {
+            puts("slama");
             clients[client_index].diamond--;
             if (clients[client_index].diamond == 0) {
                 clients[client_index].isInGame = FALSE;
@@ -146,6 +153,7 @@ void processReply(char buff[], int client_index) {
     else if (buff[2] == '2' && !clients[client_index].answers[1]) {
         clients[client_index].answers[1] = TRUE;
         if (buff[3] != '1') {
+            puts("slama");
             clients[client_index].diamond--;
             if (clients[client_index].diamond == 0) {
                 clients[client_index].isInGame = FALSE;
@@ -158,6 +166,7 @@ void processReply(char buff[], int client_index) {
     else if (buff[2] == '3' && !clients[client_index].answers[2]) {
         clients[client_index].answers[2] = TRUE;
         if (buff[3] != '1') {
+            puts("slama");
             clients[client_index].diamond--;
             if (clients[client_index].diamond == 0) {
                 clients[client_index].isInGame = FALSE;
@@ -170,6 +179,7 @@ void processReply(char buff[], int client_index) {
     else if (buff[2] == '4' && !clients[client_index].answers[3]) {
         clients[client_index].answers[3] = TRUE;
         if (buff[3] != '1') {
+            puts("slama");
             clients[client_index].diamond--;
             if (clients[client_index].diamond == 0) {
                 clients[client_index].isInGame = FALSE;
