@@ -3,16 +3,15 @@
 
 
 void broadCast() {
-    int inGame = TRUE;
     int indexOfQuestion = 0;
     createQuestion();
-    while (inGame) {
+    while (1) {
         struct timeval interval;
         char buff[BUF_SIZE] = {0};
         t = time(NULL);
         tm = *localtime(&t);
-        interval.tv_sec = 0;
-        interval.tv_usec = 10;
+        interval.tv_sec = 1;
+        interval.tv_usec = 0;
         //clear the socket set
         FD_ZERO(&readfds);
 //        FD_ZERO(&wrfds);
@@ -41,6 +40,7 @@ void broadCast() {
         }
         //wait for an activity on one of the sockets , timeout is NULL ,
         //so wait indefinitely
+        printConsole(".");
         if (checkSeconds())
         {
             if (indexOfQuestion == 5)
@@ -93,6 +93,9 @@ void sendQuestions(int index) {
             q[index][0] = 'p';
             q[index][1] = 'q';
             send(sd, q[index], 100, 0);
+            for (int i = 0; i < 100; ++i) {
+                q[index][i] = q[index][i + 2];
+            }
         }
 
     }

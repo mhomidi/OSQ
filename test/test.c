@@ -1,19 +1,21 @@
 #include <stdio.h>
+#include <string.h> //strlen
+#include <stdlib.h>
+#include <errno.h>
+#include <unistd.h> //close
+#include <arpa/inet.h> //close
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <sys/time.h> //FD_SET, FD_ISSET, FD_ZERO macros
 
-const char * array[] = {
-        "First entry",
-        "Second entry",
-        "Third entry",
-};
 
 #define n_array (sizeof (array) / sizeof (const char *))
 
 int main ()
 {
-    int i;
-
-    for (i = 0; i < n_array; i++) {
-        printf ("%d: %s\n", i, array[i]);
+    for (int i = 0; i < 10; ++i) {
+        write(1, "salam hala khobi sha?\n", strlen("salam hala khobi sha?\n") + 1);
     }
     return 0;
 }

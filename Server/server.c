@@ -1,8 +1,8 @@
 #include "broadCast.h"
 
 
-int isRequestOnSocked(char buffer[]) {
-    if (buffer[0] == REQUEST)
+int isRequestOnSocked(char aaaa[]) {
+    if (aaaa[0] == REQUEST)
         return TRUE;
     return FALSE;
 }
@@ -126,5 +126,7 @@ void startTheGame() {
 
 
 void printConsole(char in[]) {
-    puts(in);
+//    puts(in);
+    write(1, in, strlen(in) + 1);
+    write(1, "\n", 2);
 }

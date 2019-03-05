@@ -4,15 +4,15 @@
 
 int main(int argc , char *argv[])
 {
-
+    int preGame = FALSE;
     t = time(NULL);
     tm = *localtime(&t);
     max_clients = 10;
     opt = TRUE;
     day = 5;
-    hour = 13;
-    min = 36;
-    sec = 40;
+    hour = 16;
+    min = 47;
+    sec = 0;
     //a message
     char *message = "p0";
     a.tv_sec = 1;
@@ -65,6 +65,7 @@ int main(int argc , char *argv[])
 
     while(TRUE)
     {
+        int check = TRUE;
         char buff[BUF_SIZE] = {0};
         //clear the socket set
         FD_ZERO(&readfds);
@@ -106,7 +107,7 @@ int main(int argc , char *argv[])
         {
             printf("select error");
         }
-        if (checkTimeOfGame()) {
+        if (checkTimeOfGame() && preGame) {
             printConsole("The competition will start 10 sec later");
             startTheGame();
             printConsole("The competition finished");
@@ -115,11 +116,12 @@ int main(int argc , char *argv[])
                     send(clients[j].socket_id, "pg", 10, 0);
                 }
             }
+            preGame = FALSE;
+            check = FALSE;
         }
-
         //If something happened on the master socket ,
         //then its an incoming connection
-        if (FD_ISSET(master_socket, &readfds))
+        if (FD_ISSET(master_socket, &readfds) && check)
         {
             if ((new_socket = accept(master_socket,
                                      (struct sockaddr *)&address, (socklen_t*)&addrlen))<0)
@@ -154,7 +156,8 @@ int main(int argc , char *argv[])
                 }
             }
         }
-        if (FD_ISSET(0, &readfds))
+
+        if (FD_ISSET(0, &readfds) && check)
         {
             if ((valread = read(0 , buffer, 1024)) != 0)
             {
@@ -167,10 +170,11 @@ int main(int argc , char *argv[])
             }
         }
         //else its some IO operation on some other socket
+
         for (i = 0; i < max_clients; i++)
         {
             sd = clients[i].socket_id;
-            if (sd != -1 && FD_ISSET( sd , &readfds))
+            if (sd != -1 && FD_ISSET( sd , &readfds)  && check)
             {
                 //Check if it was for closing , and also read the
                 //incoming message

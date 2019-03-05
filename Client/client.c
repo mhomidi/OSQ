@@ -241,13 +241,13 @@ void errorInput() {
 }
 
 void printConsole(char in[]) {
-    puts(in);
+//    puts(in);
+    write(1, in, strlen(in) + 1);
+    write(1, "\n", 2);
 }
 
 void processWhatToDo(char buff[], int sockfd) {
     int n = 0;
-    printConsole(buff);
-
 
     if (buff[0] == '2') {
                 showGetDiamond(buff, sockfd);
