@@ -4,14 +4,14 @@
 
 int main(int argc , char *argv[])
 {
-    int preGame = FALSE;
+    int preGame = TRUE;
     t = time(NULL);
     tm = *localtime(&t);
     max_clients = 10;
     opt = TRUE;
     day = 5;
     hour = 19;
-    min = 5;
+    min = 53;
     sec = 0;
     //a message
     char *message = "p0";
@@ -50,7 +50,6 @@ int main(int argc , char *argv[])
         perror("bind failed");
         exit(EXIT_FAILURE);
     }
-    printf("Listener on port %d \n", PORT);
 
     //try to specify maximum of 3 pending connections for the master socket
     if (listen(master_socket, 3) < 0)
@@ -105,7 +104,7 @@ int main(int argc , char *argv[])
 
         if ((activity < 0) && (errno!=EINTR))
         {
-            printf("select error");
+            printConsole("select error");
         }
         if (checkTimeOfGame() && preGame) {
             printConsole("The competition will start 10 sec later");
@@ -140,8 +139,7 @@ int main(int argc , char *argv[])
             }
 
             //inform user of socket number - used in send and receive commands
-            printf("New connection , socket fd is %d , ip is : %s , port : %d\n" , new_socket ,
-                    inet_ntoa(address.sin_addr) , ntohs(address.sin_port));
+            printConsole("New connection");
 
 //            send new connection greeting message
             if( send(new_socket, message, strlen(message), 0) != strlen(message) )
@@ -159,7 +157,7 @@ int main(int argc , char *argv[])
                 {
                     clients[k].socket_id = new_socket;
                     clients[k].port = ntohs(address.sin_port);
-                    printf("Adding to list of sockets as %d\n" , k);
+                    printConsole("Adding to list of sockets\n");
 
                     break;
                 }
@@ -192,8 +190,7 @@ int main(int argc , char *argv[])
                     //Somebody disconnected , get his details and print
                     getpeername(sd , (struct sockaddr*)&address , \
 						(socklen_t*)&addrlen);
-                    printf("Host disconnected , ip %s , port %d \n" ,
-                           inet_ntoa(address.sin_addr) , ntohs(address.sin_port));
+                    printConsole("One of the socked disconnected");
 
                     //Close the socket and mark as 0 in list for reuse
                     close( sd );

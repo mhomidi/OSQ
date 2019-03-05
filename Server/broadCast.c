@@ -51,7 +51,7 @@ void broadCast() {
         activity = select( max_sd + 1 , &readfds , NULL , NULL , &interval);
         if ((activity < 0) && (errno!=EINTR))
         {
-            printf("select error");
+            printConsole("select error");
         }
 
         for (i = 0; i < max_clients; i++)

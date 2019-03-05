@@ -59,8 +59,8 @@ void responseRequest(char buff[], int client_index) {
         int index;
         if ((index = isUsernameExist(&buff[2])) != -1 && clients[index].socket_id != -1){
             printWithoutEnter(clients[index].name);
-            printWithoutEnter("and")
-            printWithoutEnter(clients[]client_index.name);
+            printWithoutEnter("and");
+            printWithoutEnter(clients[client_index].name);
             printConsole("started to chat together");
             send(clients[index].socket_id , "p6" , 3 , 0 );
             send(clients[client_index].socket_id , "p6" , 3 , 0 );

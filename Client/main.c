@@ -17,11 +17,11 @@ int main(int argc , char *argv[])
     // socket create and varification
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
     if (sockfd == -1) {
-        printf("socket creation failed...\n");
+        printConsole("socket creation failed...\n");
         exit(0);
     }
     else
-        printf("Socket successfully created..\n");
+        printConsole("Socket successfully created..\n");
     bzero(&servaddr, sizeof(servaddr));
 
     // assign IP, PORT
@@ -31,11 +31,11 @@ int main(int argc , char *argv[])
 
     // connect the client socket to server socket
     if (connect(sockfd, (SA*)&servaddr, sizeof(servaddr)) != 0) {
-        printf("connection with the server failed...\n");
+        printConsole("connection with the server failed...\n");
         exit(0);
     }
     else
-        printf("connected to the server..\n");
+        printConsole("connected to the server..\n");
 
     // function for chat
     func(sockfd);
