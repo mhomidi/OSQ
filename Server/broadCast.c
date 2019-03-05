@@ -40,10 +40,10 @@ void broadCast() {
         }
         //wait for an activity on one of the sockets , timeout is NULL ,
         //so wait indefinitely
-        printConsole(".");
         puts(".");
         if (checkSeconds())
         {
+            printf("%d\t", indexOfQuestion);
             if (indexOfQuestion == 5)
                 break;
             sendQuestions(indexOfQuestion);
@@ -58,6 +58,7 @@ void broadCast() {
         for (i = 0; i < max_clients; i++)
         {
             sd = clients[i].socket_id;
+
             if (sd != -1 && FD_ISSET( sd , &readfds) && clients[i].isInGame)
             {
 
@@ -65,6 +66,18 @@ void broadCast() {
                 //incoming message
                 if ((valread = read( sd , buff, 1024)) != 0) {
                     processReply(buff, i);
+                }
+                else
+                {
+
+                    //Somebody disconnected , get his details and print
+                    getpeername(sd , (struct sockaddr*)&address , \
+						(socklen_t*)&addrlen);
+                    printConsole("One of the socked disconnected");
+
+                    //Close the socket and mark as 0 in list for reuse
+                    close( sd );
+                    clients[i].socket_id = -1;
                 }
             }
             else if (!clients[i].isInGame && sd != -1 && FD_ISSET( sd , &readfds)) {
