@@ -41,6 +41,7 @@ void broadCast() {
         //wait for an activity on one of the sockets , timeout is NULL ,
         //so wait indefinitely
         printConsole(".");
+        puts(".");
         if (checkSeconds())
         {
             if (indexOfQuestion == 5)
