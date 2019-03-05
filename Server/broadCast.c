@@ -16,13 +16,13 @@ void broadCast() {
         FD_ZERO(&readfds);
 //        FD_ZERO(&wrfds);
 
+        puts(".");
         FD_SET(0, &readfds);
         //add master socket to set
         FD_SET(master_socket, &readfds);
 //        FD_SET(master_socket, &wrfds);
         max_sd = master_socket;
         //add child sockets to set
-        puts(".");
         for ( i = 0 ; i < max_clients ; i++)
         {
             //socket descriptor
