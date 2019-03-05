@@ -59,6 +59,9 @@ void showRespose(char buff[], int sockfd) {
         printConsole("The competition finished");
         printWhatToDo();
     }
+    else if (buff[1] == RECIEVE_CHAT) {
+        printConsole(buff + 2);
+    }
 }
 
 
@@ -78,7 +81,7 @@ void request(char buff[], char input[] , int sockfd) {
         processWhatToDo(input, sockfd);
     }
 
-    else if (buff[1] == USER_FOUND) {
+    else if (buff[1] == USER_FOUND || buff[1] == RECIEVE_CHAT) {
         processChating(input, sockfd);
     }
     else if (buff[1] == _LOGIN) {
@@ -93,6 +96,9 @@ void request(char buff[], char input[] , int sockfd) {
     else if (buff[1] == GET_DIAMOND) {
         processGetDiamond(input, sockfd);
     }
+    else if (buff[1] == APPLY_CHAT) {
+        applyChat(input, sockfd);
+    }
     else if (buff[1] == QUESTION || buff[1] == CAN_NOT_ANSWER ||
     buff[1] == ANSWERED || buff[1] == ANSWER_INCORRECT) {
         replyQuestion(input, buff,  sockfd);
@@ -104,65 +110,18 @@ void func(int sockfd)
 {
     int n = 0;
     char input[BUF_SIZE] = {0};
-//    printConsole("Select one of these:");
-//    printConsole("1.Signup");
-//    printConsole("2.Login");
-//    while(TRUE) {
-//        n = 0;
-//        while ((buff[n++] = getchar()) != '\n');
-//        if (buff[0] == '1') {
-//            int n = 2;
-//            printConsole("Please enter your username to signup: ");
-//            buff[0] = REQUEST;
-//            buff[1] = SIGNUP;
-//            while ((buff[n++] = getchar()) != '\n');
-//            buff[n - 1] = '\0';
-//            send(sockfd, buff, BUF_SIZE, 0);
-//            break;
-//        } else if (buff[0] == '2') {
-//            int n = 2;
-//            printConsole("Please enter your username to login: ");
-//            buff[0] = REQUEST;
-//            buff[1] = LOGIN;
-//            while ((buff[n++] = getchar()) != '\n');
-//            buff[n - 1] = '\0';
-//            send(sockfd, buff, BUF_SIZE, 0);
-//            break;
-//        } else
-//            errorInput();
-//    }
+//    printConsole("S
     for (;;) {
         int activity, valread;
-//        int n;
-//        bzero(buff, sizeof(buff));
-//        printf("Enter the string : ");
-//        n = 0;
-//        while ((buff[n++] = getchar()) != '\n')
-//            ;
-//        write(sockfd, buff, sizeof(buff));
-//        bzero(buff, sizeof(buff));
-//        read(sockfd, buff, sizeof(buff));
-//        printf("From Server : %s", buff);
-//        if ((strncmp(buff, "exit", 4)) == 0) {
-//            printf("Client Exit...\n");
-//            break;
-//        }
-//        getchar()
-//        read(sockfd, buff, sizeof(buff));
         FD_ZERO(&readfds);
-//        FD_ZERO(&wrfds);
-//        FD_ZERO(&s_ex);
 
         //add master socket to set
         FD_SET(fileno(stdin), &readfds);
         FD_SET(sockfd, &readfds);
-//        FD_SET(sockfd, &wrfds);
         activity = select( sockfd + 1 , &readfds , NULL , NULL , NULL);
-//        puts("salma");
         if (FD_ISSET( sockfd , &readfds)) {
             valread = read(sockfd, globalBuffer, BUF_SIZE);
             if (valread) {
-//                puts(buff);
                 if (isResponseOnSocked(globalBuffer)) {
                     showRespose(globalBuffer, sockfd);
                 }
@@ -174,6 +133,7 @@ void func(int sockfd)
             {
                 request(globalBuffer, input, sockfd);
 //                printConsole(globalBuffer);
+                bzero(input, BUF_SIZE);
             }
         }
     }
@@ -181,59 +141,23 @@ void func(int sockfd)
 
 
 
-void printString(char buff[]) {
-    write(STDOUT_FILENO, buff, BUF_SIZE);
-    write(STDOUT_FILENO, "\n", sizeof(12));
-    fflush(stdout);
-}
-
-
-void input(char* inputStr)
-{
-    int numBytes;
-    do
-    {
-        numBytes = read(0, inputStr, BUF_SIZE);
-        inputStr[numBytes - 1] = '\0';
-    }while(numBytes < 2);
-
-    for (int i = BUF_SIZE - 3; i > -1; --i) {
-        inputStr[i + 2] = inputStr[i];
-    }
-
-}
-
 void showGetDiamond(char input[], int sockfd) {
     int n = 0;
     printConsole("Enter a number of way:");
     printConsole("1.Enter my email (1 diamond)");
     globalBuffer[1] = GET_DIAMOND;
-//    while (TRUE) {
-//        n = 0;
-//        while ((buff[n++] = getchar()) != '\n');
-//        if (buff[0] == '1' && buff[1] == '\n') {
-//            n = 2;
-//            printConsole("Please enter your email:");
-//            while ((buff[n++] = getchar()) != '\n');
-//            buff[0] = REQUEST;
-//            buff[1] = ADD_EMAIL;
-//            send(sockfd, buff, BUF_SIZE, 0);
-//            break;
-//        }
-//        else
-//            errorInput();
-//    }
 }
 
 void showAndProcessChat(char buff[], int sockfd) {
     int n;
     printConsole("Enter username that you want to talk: ");
-    n = 2;
-    while ((buff[n++] = getchar()) != '\n');
-    buff[n - 1] = '\0';
-    buff[0] = REQUEST;
-    buff[1] = CHAT;
-    send(sockfd, buff, BUF_SIZE, 0);
+    globalBuffer[1] = APPLY_CHAT;
+//    n = 2;
+//    while ((buff[n++] = getchar()) != '\n');
+//    buff[n - 1] = '\0';
+//    buff[0] = REQUEST;
+//    buff[1] = CHAT;
+//    send(sockfd, buff, BUF_SIZE, 0);
 }
 
 void errorInput() {
@@ -269,9 +193,8 @@ void processWhatToDo(char buff[], int sockfd) {
 
 
 void processChating(char buff[], int sockfd) {
-    int n = 0;
-    while ((buff[n++] = getchar()) != '\n');
-    buff[n - 1] = '\0';
+    createRequestBuffer(buff, SEND_CHAT);
+    send(sockfd, buff, BUF_SIZE, 0);
 }
 
 void processSignup(char buff[], int sockfd){
@@ -299,7 +222,7 @@ void printWhatToDo() {
 }
 
 void createRequestBuffer(char* buff, char req) {
-    buff[strlen(buff) - 1] = 0;
+    buff[strlen(buff)] = 0;
     for (int i = strlen(buff); i > 1; --i) {
         buff[i] = buff[i - 2];
     }
@@ -353,4 +276,13 @@ void replyQuestion(char input[], char buff[],  int sockfd) {
     input[2] = buff[2];
     input[4] = 0;
     send(sockfd, input, 10, 0);
+}
+
+void applyChat(char input[], int sockfd) {
+    for (int i = strlen(input); i > 1; --i) {
+        input[i] = input[i - 2];
+    }
+    input[0] = REQUEST;
+    input[1] = CHAT;
+    send(sockfd, input, BUF_SIZE, 0);
 }

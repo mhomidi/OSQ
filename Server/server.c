@@ -11,8 +11,7 @@ void responseRequest(char buff[], int client_index) {
     char subBuff[BUF_SIZE] = {0};
     if (buff[1] == ADD_USERNAME){
         if (isUsernameExist(&buff[2]) == -1) {
-            strncpy(subBuff, &buff[2], BUF_SIZE - 2);
-            strncpy(clients[client_index].name, subBuff, sizeof(subBuff));
+            strncpy(clients[client_index].name, buff + 2, BUF_SIZE);
             clients[client_index].diamond = 5;
 //        printString(clients[client_index].name);
             send(clients[client_index].socket_id, "p2", 3, 0);
@@ -47,11 +46,14 @@ void responseRequest(char buff[], int client_index) {
 
     else if (buff[1] == CHAT){
         int index;
-//        printf("%d\n",isUsernameExist(&buff[2]));
-        if ((index = isUsernameExist(&buff[2])) != -1 && clients[index].socket_id != 0){
+        printConsole(buff + 2);
+        if ((index = isUsernameExist(&buff[2])) != -1 && clients[index].socket_id != -1){
+//            printConsole(clients[index].name);
+//            printConsole(clients[client_index].name);
             send(clients[index].socket_id , "p6" , 3 , 0 );
             send(clients[client_index].socket_id , "p6" , 3 , 0 );
-
+            strncpy(clients[client_index].chatName, clients[index].name, BUF_SIZE);
+            strncpy(clients[index].chatName, clients[client_index].name, BUF_SIZE);
         }
         else
             send(clients[client_index].socket_id , "p5" , 3 , 0 );
@@ -68,6 +70,23 @@ void responseRequest(char buff[], int client_index) {
     }
     else if (buff[1] == REPLY) {
         processReply(buff, client_index);
+    }
+    else if (buff[1] == SEND_CHAT) {
+        int index;
+        if ((index = isUsernameExist(clients[client_index].chatName)) != -1) {
+            if(strcmp(buff + 2, "disconnect") == 0){
+                send(clients[index].socket_id , "p2" , 3 , 0 );
+                send(clients[client_index].socket_id , "p2" , 3 , 0 );
+                strncpy(clients[client_index].chatName, "", BUF_SIZE);
+                strncpy(clients[index].chatName, "", BUF_SIZE);
+            }
+            else {
+                buff[0] = 'p';
+                buff[1] = 'i';
+                send(clients[index].socket_id, buff, BUF_SIZE, 0);
+            }
+        }
+
     }
 
 }

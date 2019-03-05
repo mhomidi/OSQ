@@ -21,6 +21,7 @@ fd_set wrfds, s_ex;
 #define TIME_GAME '5'
 #define GET_NUMBER_OF_DIAMOND '6'
 #define REPLY 'r'
+#define SEND_CHAT '7'
 
 
 //server
@@ -43,6 +44,8 @@ fd_set wrfds, s_ex;
 #define ANSWER_INCORRECT 'e'
 #define ANSWERED 'f'
 #define END_GAME 'g'
+#define APPLY_CHAT 'h'
+#define RECIEVE_CHAT 'i'
 
 #define TRUE 1
 #define FALSE 0
@@ -74,3 +77,4 @@ void processSendEmail(char input[], int sockfd);
 void processGetDiamond(char input[], int sockfd);
 void showClientDiamond(int sockfd);
 void replyQuestion(char input[], char buff[],  int sockfd);
+void applyChat(char input[], int sockfd);

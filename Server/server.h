@@ -18,6 +18,7 @@
 #define TIME_GAME '5'
 #define GET_NUMBER_OF_DIAMOND '6'
 #define REPLY 'r'
+#define SEND_CHAT '7'
 
 
 
@@ -36,6 +37,7 @@ typedef struct client {
     char email[BUF_SIZE];
     int isInGame;
     int answers[5];
+    char chatName[BUF_SIZE];
 } Client;
 
 
