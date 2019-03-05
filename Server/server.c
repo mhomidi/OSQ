@@ -58,7 +58,7 @@ void responseRequest(char buff[], int client_index) {
     }
 
     else if (buff[1] == TIME_GAME) {
-        send(clients[client_index].socket_id , "pa1395/12/22" , 20 , 0 );
+        void sendTimeOfGame(clients[client_index].socket_id );
     }
     else if (buff[1] == GET_NUMBER_OF_DIAMOND) {
         char number[10] = {0};
@@ -146,4 +146,20 @@ void printConsole(char in[]) {
 //    puts(in);
     write(1, in, strlen(in) + 1);
     write(1, "\n", 2);
+}
+
+void sendTimeOfGame(int sockfd) {
+    char c[BUF_SIZE] = {0};
+    c[0] = 'p';
+    c[1] = 'a';
+    c[2] = hour / 10 + 48;
+    c[3] = hour % 10 + 48;
+    c[4] = ':';
+    c[5] = min / 10 + 48;
+    c[6] = min % 10 + 48;
+    c[7] = ':';
+    c[8] = sec / 10 + 48;
+    c[9] = sec % 10 + 48;
+    send(sockfd, c, BUF_SIZE, 0);
+
 }

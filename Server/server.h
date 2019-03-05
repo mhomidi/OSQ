@@ -67,3 +67,4 @@ void intToString(int a, char buff[]);
 int checkTimeOfGame();
 void startTheGame();
 void printConsole(char in[]);
+void sendTimeOfGame(int sockfd);
