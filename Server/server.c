@@ -13,7 +13,7 @@ void responseRequest(char buff[], int client_index) {
         if (isUsernameExist(&buff[2]) == -1) {
             strncpy(clients[client_index].name, buff + 2, BUF_SIZE);
             printWithoutEnter(clients[client_index].name);
-            printConsole("signUp.")
+            printConsole("sign up.");
             clients[client_index].diamond = 5;
 //        printString(clients[client_index].name);
             send(clients[client_index].socket_id, "p2", 3, 0);
@@ -28,7 +28,7 @@ void responseRequest(char buff[], int client_index) {
         if ((index = isUsernameExist(&buff[2])) != -1) {
             send(clients[client_index].socket_id, "p2", 3, 0);
             printWithoutEnter(clients[client_index].name);
-            printConsole("login.")
+            printConsole("login.");
             if (index != client_index) {
                 strncpy(clients[index].name, clients[client_index].name, sizeof(clients[client_index].name));
                 clients[index].diamond = clients[client_index].diamond;
@@ -44,7 +44,7 @@ void responseRequest(char buff[], int client_index) {
     else if (buff[1] == ADD_EMAIL) {
         if (!clients[client_index].emailStatus) {
             printWithoutEnter(clients[client_index].name);
-            printConsole("add his/her email.")
+            printConsole("add his/her email.");
             strncpy(subBuff, &buff[2], BUF_SIZE - 2);
             strncpy(clients[client_index].email, subBuff, sizeof(subBuff));
             clients[client_index].diamond++;
@@ -81,6 +81,8 @@ void responseRequest(char buff[], int client_index) {
         send(clients[client_index].socket_id , number , 20 , 0 );
     }
     else if (buff[1] == REPLY) {
+        printWithoutEnter(clients[client_index].name);
+        printConsole("reply current question.");
         processReply(buff, client_index);
     }
     else if (buff[1] == SEND_CHAT) {
@@ -100,25 +102,6 @@ void responseRequest(char buff[], int client_index) {
         }
 
     }
-
-}
-
-
-void printString(char buff[]) {
-    write(STDOUT_FILENO, buff, sizeof(buff));
-    write(STDOUT_FILENO, "\n", sizeof(12));
-    fflush(stdout);
-}
-
-
-void input(char* inputStr)
-{
-    int numBytes;
-    do
-    {
-        numBytes = read(0, inputStr, sizeof(inputStr));
-        inputStr[numBytes - 1] = '\0';
-    }while(numBytes < 2);
 
 }
 
