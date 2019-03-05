@@ -38,10 +38,15 @@ void responseRequest(char buff[], int client_index) {
     }
 
     else if (buff[1] == ADD_EMAIL) {
-        strncpy(subBuff, &buff[2], BUF_SIZE - 2);
-        strncpy(clients[client_index].email, subBuff, sizeof(subBuff));
-        clients[client_index].diamond++;
-        send(clients[client_index].socket_id , "p2" , 3 , 0 );
+        if (!clients[client_index].emailStatus) {
+            strncpy(subBuff, &buff[2], BUF_SIZE - 2);
+            strncpy(clients[client_index].email, subBuff, sizeof(subBuff));
+            clients[client_index].diamond++;
+            clients[client_index].emailStatus = TRUE;
+            send(clients[client_index].socket_id, "p2", 3, 0);
+        }
+        else
+            send(clients[client_index].socket_id, "pk", 3, 0);
     }
 
     else if (buff[1] == CHAT){
@@ -58,7 +63,7 @@ void responseRequest(char buff[], int client_index) {
     }
 
     else if (buff[1] == TIME_GAME) {
-        void sendTimeOfGame(clients[client_index].socket_id );
+        sendTimeOfGame(clients[client_index].socket_id );
     }
     else if (buff[1] == GET_NUMBER_OF_DIAMOND) {
         char number[10] = {0};

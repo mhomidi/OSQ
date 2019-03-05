@@ -65,6 +65,10 @@ void showRespose(char buff[], int sockfd) {
     else if (buff[1] == RECIEVE_CHAT) {
         printConsole(buff + 2);
     }
+    else if (buff[1] == INVALID_EMAIL) {
+        printConsole("You send once your email");
+        printWhatToDo();
+    }
 }
 
 
@@ -80,7 +84,8 @@ void request(char buff[], char input[] , int sockfd) {
         processLogin(input, sockfd);
     }
     else if (buff[1] == SUCCESSFULLY || buff[1] == GET_TIME ||
-        buff[1] == USER_NOT_FOUND || buff[1] == SHOW_NUMBER_OF_DIAMOND || buff[1] == END_GAME) {
+            buff[1] == USER_NOT_FOUND || buff[1] == SHOW_NUMBER_OF_DIAMOND || buff[1] == END_GAME ||
+            buff[1] == INVALID_EMAIL) {
         processWhatToDo(input, sockfd);
     }
 

@@ -35,6 +35,7 @@ typedef struct client {
     int socket_id;
     int port;
     char email[BUF_SIZE];
+    int emailStatus;
     int isInGame;
     int answers[5];
     char chatName[BUF_SIZE];

@@ -47,6 +47,7 @@ fd_set wrfds, s_ex;
 #define APPLY_CHAT 'h'
 #define RECIEVE_CHAT 'i'
 #define START_GAME 'j'
+#define INVALID_EMAIL 'k'
 
 #define TRUE 1
 #define FALSE 0
