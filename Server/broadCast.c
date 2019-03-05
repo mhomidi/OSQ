@@ -21,7 +21,7 @@ void broadCast() {
         FD_SET(master_socket, &readfds);
 //        FD_SET(master_socket, &wrfds);
         max_sd = master_socket;
-
+        printf(".");
         //add child sockets to set
         for ( i = 0 ; i < max_clients ; i++)
         {
@@ -40,7 +40,7 @@ void broadCast() {
         }
         //wait for an activity on one of the sockets , timeout is NULL ,
         //so wait indefinitely
-        puts(".");
+//        puts(".");
         if (checkSeconds())
         {
             printf("%d\t", indexOfQuestion);
