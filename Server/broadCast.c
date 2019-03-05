@@ -59,7 +59,6 @@ void broadCast() {
             sd = clients[i].socket_id;
             if (sd != -1 && FD_ISSET( sd , &readfds) && clients[i].isInGame)
             {
-                printConsole("2222");
 
                 //Check if it was for closing , and also read the
                 //incoming message
@@ -115,7 +114,6 @@ void createQuestion() {
 
 
 void processReply(char buff[], int client_index) {
-    printConsole(buff);
     if (buff[2] == '1' && !clients[client_index].answers[0]) {
         clients[client_index].answers[0] = TRUE;
         if (buff[3] != '1') {

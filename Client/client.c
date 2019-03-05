@@ -63,7 +63,6 @@ void showRespose(char buff[], int sockfd) {
 
 
 void request(char buff[], char input[] , int sockfd) {
-    printConsole(buff);
     if (buff[1] == USERNAME_REENTER){
         processSignup(buff, sockfd);
     }
@@ -94,7 +93,8 @@ void request(char buff[], char input[] , int sockfd) {
     else if (buff[1] == GET_DIAMOND) {
         processGetDiamond(input, sockfd);
     }
-    else if (buff[1] == QUESTION || buff[1] == CAN_NOT_ANSWER || buff[1] == ANSWERED || ANSWER_INCORRECT) {
+    else if (buff[1] == QUESTION || buff[1] == CAN_NOT_ANSWER ||
+    buff[1] == ANSWERED || buff[1] == ANSWER_INCORRECT) {
         replyQuestion(input, buff,  sockfd);
     }
 }
@@ -246,21 +246,23 @@ void printConsole(char in[]) {
 
 void processWhatToDo(char buff[], int sockfd) {
     int n = 0;
+    printConsole(buff);
 
-            if (buff[0] == '2') {
+
+    if (buff[0] == '2') {
                 showGetDiamond(buff, sockfd);
-            }
-            else if (buff[0] == '1') {
-                showAndProcessChat(buff, sockfd);
-            }
-            else if (buff[0] == '3') {
-                getTimeOfGame(sockfd);
-            }
-            else if (buff[0] == '4') {
-                showClientDiamond(sockfd);
-            }
-            else
-                errorInput();
+    }
+    else if (buff[0] == '1') {
+        showAndProcessChat(buff, sockfd);
+    }
+    else if (buff[0] == '3') {
+        getTimeOfGame(sockfd);
+    }
+    else if (buff[0] == '4') {
+        showClientDiamond(sockfd);
+    }
+    else
+        errorInput();
 //        }
 //    }
 }
