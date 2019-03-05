@@ -69,3 +69,4 @@ int checkTimeOfGame();
 void startTheGame();
 void printConsole(char in[]);
 void sendTimeOfGame(int sockfd);
+void printWithoutEnter(char in[]);

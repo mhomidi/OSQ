@@ -12,6 +12,8 @@ void responseRequest(char buff[], int client_index) {
     if (buff[1] == ADD_USERNAME){
         if (isUsernameExist(&buff[2]) == -1) {
             strncpy(clients[client_index].name, buff + 2, BUF_SIZE);
+            printWithoutEnter(clients[client_index].name);
+            printConsole("signUp.")
             clients[client_index].diamond = 5;
 //        printString(clients[client_index].name);
             send(clients[client_index].socket_id, "p2", 3, 0);
@@ -25,6 +27,8 @@ void responseRequest(char buff[], int client_index) {
         int index;
         if ((index = isUsernameExist(&buff[2])) != -1) {
             send(clients[client_index].socket_id, "p2", 3, 0);
+            printWithoutEnter(clients[client_index].name);
+            printConsole("login.")
             if (index != client_index) {
                 strncpy(clients[index].name, clients[client_index].name, sizeof(clients[client_index].name));
                 clients[index].diamond = clients[client_index].diamond;
@@ -39,6 +43,8 @@ void responseRequest(char buff[], int client_index) {
 
     else if (buff[1] == ADD_EMAIL) {
         if (!clients[client_index].emailStatus) {
+            printWithoutEnter(clients[client_index].name);
+            printConsole("add his/her email.")
             strncpy(subBuff, &buff[2], BUF_SIZE - 2);
             strncpy(clients[client_index].email, subBuff, sizeof(subBuff));
             clients[client_index].diamond++;
@@ -52,7 +58,10 @@ void responseRequest(char buff[], int client_index) {
     else if (buff[1] == CHAT){
         int index;
         if ((index = isUsernameExist(&buff[2])) != -1 && clients[index].socket_id != -1){
-            printConsole("Two users started to chat together");
+            printWithoutEnter(clients[index].name);
+            printWithoutEnter("and")
+            printWithoutEnter(clients[]client_index.name);
+            printConsole("started to chat together");
             send(clients[index].socket_id , "p6" , 3 , 0 );
             send(clients[client_index].socket_id , "p6" , 3 , 0 );
             strncpy(clients[client_index].chatName, clients[index].name, BUF_SIZE);
@@ -167,4 +176,9 @@ void sendTimeOfGame(int sockfd) {
     c[9] = sec % 10 + 48;
     send(sockfd, c, BUF_SIZE, 0);
 
+}
+
+void printWithoutEnter(char in[]) {
+    write(1, in, strlen(in) + 1);
+    write(1, " ", 2);
 }
