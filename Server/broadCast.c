@@ -14,8 +14,6 @@ void broadCast() {
         interval.tv_usec = 0;
         //clear the socket set
         FD_ZERO(&readfds);
-//        FD_ZERO(&wrfds);
-
         puts(".");
         FD_SET(0, &readfds);
         //add master socket to set
