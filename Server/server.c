@@ -46,10 +46,11 @@ void responseRequest(char buff[], int client_index) {
 
     else if (buff[1] == CHAT){
         int index;
-        printConsole(buff + 2);
         if ((index = isUsernameExist(&buff[2])) != -1 && clients[index].socket_id != -1){
-//            printConsole(clients[index].name);
-//            printConsole(clients[client_index].name);
+            printf("%d    %d  \n", index, client_index);
+            printConsole(buff + 2);
+            printConsole(clients[index].name);
+            printConsole(clients[client_index].name);
             send(clients[index].socket_id , "p6" , 3 , 0 );
             send(clients[client_index].socket_id , "p6" , 3 , 0 );
             strncpy(clients[client_index].chatName, clients[index].name, BUF_SIZE);
@@ -113,7 +114,7 @@ void input(char* inputStr)
 int isUsernameExist(char username[]) {
     for (int j = 0; j < max_clients; ++j) {
         if (strcmp(username, clients[j].name) == 0)
-            return i;
+            return j;
     }
     return -1;
 }
