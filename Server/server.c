@@ -61,7 +61,7 @@ void responseRequest(char buff[], int client_index) {
         send(clients[client_index].socket_id , "pa1395/12/22" , 20 , 0 );
     }
     else if (buff[1] == GET_NUMBER_OF_DIAMOND) {
-        char number[10];
+        char number[10] = {0};
         intToString(clients[client_index].diamond, number);
         createResponseBuffer(number, 'd');
         send(clients[client_index].socket_id , number , 20 , 0 );

@@ -11,8 +11,8 @@ void broadCast() {
         char buff[BUF_SIZE] = {0};
         t = time(NULL);
         tm = *localtime(&t);
-        interval.tv_sec = 1;
-        interval.tv_usec = 0;
+        interval.tv_sec = 0;
+        interval.tv_usec = 10;
         //clear the socket set
         FD_ZERO(&readfds);
 //        FD_ZERO(&wrfds);
