@@ -6,7 +6,12 @@ int main(int argc , char *argv[])
 {
     int sockfd, connfd;
     struct sockaddr_in servaddr, cli;
-    int port = atoi(argv[2]);
+    int port;
+    if(argc != 3) {
+        printConsole("Arguments should be 3");
+        return 0;
+    }
+    port = atoi(argv[1]);
 
 //set of socket descriptors
     fd_set readfds;
@@ -27,7 +32,7 @@ int main(int argc , char *argv[])
     // assign IP, PORT
     servaddr.sin_family = AF_INET;
     servaddr.sin_addr.s_addr = inet_addr("127.0.0.1");
-    servaddr.sin_port = htons(PORT);
+    servaddr.sin_port = htons(port);
 
     // connect the client socket to server socket
     if (connect(sockfd, (SA*)&servaddr, sizeof(servaddr)) != 0) {

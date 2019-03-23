@@ -4,7 +4,13 @@
 
 int main(int argc , char *argv[])
 {
-    int preGame = TRUE;
+    int preGame = FALSE;
+    int port;
+    if(argc != 2) {
+        printConsole("Arguments should be 2");
+        return 0;
+    }
+    port = atoi(argv[1]);
     t = time(NULL);
     tm = *localtime(&t);
     max_clients = 10;
@@ -42,7 +48,7 @@ int main(int argc , char *argv[])
     //type of socket created
     address.sin_family = AF_INET;
     address.sin_addr.s_addr = INADDR_ANY;
-    address.sin_port = htons( PORT );
+    address.sin_port = htons( port );
 
     //bind the socket to localhost port 8888
     if (bind(master_socket, (struct sockaddr *)&address, sizeof(address))<0)

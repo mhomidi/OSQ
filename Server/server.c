@@ -132,7 +132,6 @@ void intToString(int a, char buff[]) {
 
 int checkTimeOfGame() {
     return (tm.tm_mday >= day) && (tm.tm_hour >= hour) && (tm.tm_min >= min) && (tm.tm_sec >= sec);
-//    return clock1 > 100000;
 }
 
 void startTheGame() {
